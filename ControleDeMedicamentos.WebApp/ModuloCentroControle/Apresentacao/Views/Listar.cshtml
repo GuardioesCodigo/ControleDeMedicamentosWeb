@@ -1,0 +1,37 @@
+﻿@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Centro de Controle";
+}
+
+<div class="container py-5">
+    <div class="row align-items-center min-vh-75">
+
+        <div class="col-lg-5">
+
+            <div class="d-flex flex-wrap gap-3">
+
+                <a class="btn btn-primary btn-lg rounded-pill px-5" asp-controller="Fornecedores" asp-action="Listar">
+                    Fornecedores
+                </a>
+
+                <a class="btn btn-primary btn-lg rounded-pill px-5" asp-controller="Pacientes" asp-action="Listar">
+                    Pacientes
+                </a>
+
+                <a class="btn btn-primary btn-lg rounded-pill px-5" asp-controller="Medicamentos" asp-action="Listar">
+                    Medicamentos
+                </a>
+
+                <a class="btn btn-primary btn-lg rounded-pill px-5" asp-controller="Funcionários" asp-action="Listar">
+                    Funcionários
+                </a>
+
+                <a class="btn btn-primary btn-lg rounded-pill px-5" asp-controller="Estoque" asp-action="Listar">
+                    Estoque
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+</div>

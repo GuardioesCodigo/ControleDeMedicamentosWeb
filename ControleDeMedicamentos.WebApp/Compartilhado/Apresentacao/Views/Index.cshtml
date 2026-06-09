@@ -1,0 +1,31 @@
+﻿@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Página Inicial";
+}
+
+<div class="container py-5">
+    <div class="row align-items-center min-vh-75">
+
+        <div class="col-lg-5">
+
+            <span class="badge bg-primary mb-3">Organize seus medicamentos</span>
+
+            <h1 class="display-4 fw-bold mb-3">Controle de medicamentos</h1>
+
+            <p class="lead text-secondary mb-4">
+                Controle seus medicamentos e economize
+                tempo no gerenciamento.
+            </p>
+
+            <div class="d-flex flex-wrap gap-3">
+
+                <a class="btn btn-primary btn-lg rounded-pill px-5" asp-controller="CentroControle" asp-action="Listar">
+                    Centro de Controle
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
