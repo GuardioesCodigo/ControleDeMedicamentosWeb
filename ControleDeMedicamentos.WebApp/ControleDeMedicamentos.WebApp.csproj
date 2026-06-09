@@ -12,7 +12,6 @@
     <Folder Include="Compartilhado\Apresentacao\Views\" />
     <Folder Include="Compartilhado\Infra\" />
     <Folder Include="Compartilhado\Infra\Arquivos\" />
-    <Folder Include="ModuloCentroControle\" />
     <Folder Include="ModuloCentroControle\Apresentacao\" />
     <Folder Include="ModuloCentroControle\Apresentacao\Views\" />
     <Folder Include="wwwroot\" />
