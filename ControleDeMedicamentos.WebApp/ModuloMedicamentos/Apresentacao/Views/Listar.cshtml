@@ -1,0 +1,61 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@model List<ListarMedicamentosViewModel>
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Consulta de Medicamentos</h2>
+        <a type="button" class="btn btn-outline-primary rounded-pill px-4 mb-3" asp-action="Cadastrar">
+            <i class="bi bi-plus-lg me-2"></i>Novo Medicamento</a>
+    </div>
+
+
+
+@if (Model.Count == 0)
+{
+    <div class="alert alert-warning 12px" role="alert">
+        Nenhum Medicamento cadastrado!
+    </div>
+}
+
+else
+{
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2">
+            <table class="table table-secondary">
+                <thead>
+                    <tr class="table-active">
+                        <th>Id</th>
+                        <th>Nome</th>
+                        <th>Quantidade</th>
+                        <th>Fornecedor</th>
+                        <th>Ações</th>                       
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (ListarMedicamentosViewModel f in Model)
+                    {
+                         <tr>
+                            <td>@f.Id</td>
+                            <td>@f.Nome</td>
+                            <td>@f.Quantidade</td>
+                            <td>@f.FornecedorNome</td>  
+                            <td>
+                                <a class="btn btn-outline-secondary rounded-pill px-3"
+                                    asp-action="Editar"
+                                    asp-route-id="@f.Id">Editar</a>
+
+                                <a class="btn btn-outline-danger rounded-pill px-3"
+                                    asp-action="Excluir"
+                                    asp-route-id="@f.Id">Excluir</a>
+                            </td>                          
+                        </tr>
+                    }
+                </tbody>
+    </div>
+}
+</div>
