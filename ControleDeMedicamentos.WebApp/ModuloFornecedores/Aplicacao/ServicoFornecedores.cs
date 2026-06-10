@@ -16,6 +16,9 @@ public class ServicoFornecedores
 
     public Result Cadastrar(CadastrarFornecedoresDto dtos)
     {
+        if (ExisteFornecedorComCnjp(dtos.CNPJ))
+            return Falha("Cnpj", "Já existe um fornecedor com este CNPJ.");
+
         Fornecedores novoFornecedor = new Fornecedores(
             dtos.Nome,
             dtos.Telefone,
@@ -25,6 +28,21 @@ public class ServicoFornecedores
         repositorioFornecedores.Cadastrar(novoFornecedor);
 
         return Result.Ok();
+    }
+
+    private bool ExisteFornecedorComCnjp(string cnpj, Guid? idIgnorado = null)
+    {
+        List<Fornecedores> fornecedores = repositorioFornecedores.SelecionarTodos();
+
+        foreach(Fornecedores f in fornecedores)
+        {
+            if (f.Id != idIgnorado && string.Equals(f.Cnpj, cnpj, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public List<ListarFornecedoresDto> SelecionarTodos()
@@ -48,4 +66,10 @@ public class ServicoFornecedores
         );
     }
 
+    private static Result Falha(string campo, string mensagem)
+    {
+        IError erro = new Error(mensagem).WithMetadata("Campo", campo);
+
+        return Result.Fail(erro);
+    }
 }
