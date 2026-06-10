@@ -93,5 +93,33 @@ public class FornecedoresController(IMapper mapeador, ServicoFornecedores servic
 
         return RedirectToAction(nameof(Listar));
     }
+
+    [HttpGet]
+    public ActionResult Excluir(Guid id)
+    {
+        Result<DetalhesFornecedoresDto> resultado = servicoFornecedores.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            TempData.AddErrorMessage(resultado);
+
+            return RedirectToAction(nameof(Listar));
+        }
+
+        ExcluirFornecedoresViewModel excluirVm = mapeador.Map<ExcluirFornecedoresViewModel>(resultado.Value);
+
+        return View(excluirVm);
+    }
+
+        [HttpPost]
+    public ActionResult Excluir(ExcluirFornecedoresViewModel excluirVm)
+    {
+        Result resultado = servicoFornecedores.Excluir(excluirVm.Id);
+
+        if (resultado.IsFailed)
+            TempData.AddErrorMessage(resultado);
+
+        return RedirectToAction(nameof(Listar));
+    }
 }
 

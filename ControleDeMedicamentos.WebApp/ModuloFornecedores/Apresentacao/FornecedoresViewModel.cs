@@ -38,3 +38,10 @@ public record EditarFornecedoresViewModel(
     [RegularExpression( @"^\d{14}$", ErrorMessage = "O campo \"CNPJ\" deve conter 14 dígitos.")]
     string CNPJ
 );
+
+public record ExcluirFornecedoresViewModel(
+    Guid Id,
+    string Nome,
+    string Telefone,
+    string CNPJ
+);

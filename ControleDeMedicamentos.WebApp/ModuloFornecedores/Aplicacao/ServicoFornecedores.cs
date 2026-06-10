@@ -50,6 +50,18 @@ public class ServicoFornecedores
         return Result.Ok();
     }
 
+    public Result Excluir(Guid id)
+    {
+        Fornecedores? fornecedores = repositorioFornecedores.SelecionarPorId(id);
+
+        if (fornecedores == null)
+            return Result.Fail("Fornecedor não encontrado.");
+
+        repositorioFornecedores.Excluir(id);
+
+        return Result.Ok();
+    }
+
     private bool ExisteFornecedorComCnjp(string cnpj, Guid? idIgnorado = null)
     {
         List<Fornecedores> fornecedores = repositorioFornecedores.SelecionarTodos();
