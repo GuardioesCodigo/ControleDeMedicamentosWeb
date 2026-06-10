@@ -19,6 +19,7 @@
     <Folder Include="ModuloFornecedores\Apresentacao\Views\" />
     <Folder Include="ModuloFornecedores\Infra\" />
     <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\Img\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
 
