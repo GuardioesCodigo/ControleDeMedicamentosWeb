@@ -18,7 +18,8 @@
     <Folder Include="ModuloFornecedores\Apresentacao\" />
     <Folder Include="ModuloFornecedores\Apresentacao\Views\" />
     <Folder Include="ModuloFornecedores\Infra\" />
-    <Folder Include="ModuloMedicamentos\" />
+    <Folder Include="ModuloMedicamentos\Apresentacao\" />
+    <Folder Include="ModuloMedicamentos\Apresentacao\Views\" />
     <Folder Include="ModuloMedicamentos\Dominio\" />
     <Folder Include="ModuloMedicamentos\Infra\" />
     <Folder Include="wwwroot\" />
