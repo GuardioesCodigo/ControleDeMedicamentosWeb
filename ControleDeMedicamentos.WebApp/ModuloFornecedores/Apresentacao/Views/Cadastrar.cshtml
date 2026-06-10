@@ -1,5 +1,49 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    Layout = "_Layout";
 }
+
+@model CadastrarFornecedoresViewModel
+
+<div class="container d-flex justify-content-center align-items-center"
+     style="min-height: calc(100vh - 120px);">
+
+    <form class="card border-0 shadow-lg p-4 rounded-4 w-100"
+        style="max-width: 620px;"
+        asp-action="Cadastrar"
+        method="post">
+          
+        <h2>Cadastro de Fornecedores</h2>
+
+        <div class="mb-4">
+            <label asp-for="Nome" class="form-label fw-semibold">Nome</label>
+            <input asp-for="Nome" type="text" class="form-control form-control-lg rounded-3 shadow-sm">
+            <span asp-validation-for="Nome" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="Telefone" class="form-label fw-semibold">Telefone</label>
+            <input asp-for="Telefone" type="text" class="form-control form-control-lg rounded-3 shadow-sm">
+            <span asp-validation-for="Telefone" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="CNPJ" class="form-label fw-semibold">CNPJ</label>
+            <input asp-for="CNPJ" type="text" class="form-control form-control-lg rounded-3 shadow-sm">
+            <span asp-validation-for="CNPJ" class="text-danger small"></span>
+        </div>
+
+         <div class="d-flex justify-content-end gap-3 mt-4">
+            
+            <a class="btn btn-outline-danger rounded-pill"
+               asp-action="Listar">
+                Voltar
+            </a>
+
+            <button type="submit" class="btn btn-outline-success rounded-pill">
+                Confirmar
+            </button>
+
+        </div>
+    </form>
+
+</div>

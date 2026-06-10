@@ -7,9 +7,9 @@ namespace ControleDeMedicamentos.WebApp.ModuloFornecedores.Aplicacao;
 
 public class ServicoFornecedores
 {
-    private readonly IRepositorio<Fornecedores> repositorioFornecedores;
+    private readonly IRepositorioFornecedores repositorioFornecedores;
 
-    public ServicoFornecedores(IRepositorio<Fornecedores> repositorioFornecedores)
+    public ServicoFornecedores(IRepositorioFornecedores repositorioFornecedores)
     {
         this.repositorioFornecedores = repositorioFornecedores;
     }

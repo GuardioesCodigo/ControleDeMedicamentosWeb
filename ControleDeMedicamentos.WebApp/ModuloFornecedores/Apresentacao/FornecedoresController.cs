@@ -70,7 +70,9 @@ public class FornecedoresController(IMapper mapeador, ServicoFornecedores servic
             return RedirectToAction(nameof(Listar));
         }
 
-        EditarFornecedoresViewModel editarVm = mapeador.Map<EditarFornecedoresViewModel>(resultado);
+        DetalhesFornecedoresDto fornecedores = resultado.Value;
+
+        EditarFornecedoresViewModel editarVm = mapeador.Map<EditarFornecedoresViewModel>(resultado.Value);
 
         return View(editarVm);
     } 
