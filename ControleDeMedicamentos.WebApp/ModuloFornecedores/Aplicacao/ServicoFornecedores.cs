@@ -14,6 +14,19 @@ public class ServicoFornecedores
         this.repositorioFornecedores = repositorioFornecedores;
     }
 
+    public Result Cadastrar(CadastrarFornecedoresDto dtos)
+    {
+        Fornecedores novoFornecedor = new Fornecedores(
+            dtos.Nome,
+            dtos.Telefone,
+            dtos.CNPJ
+        );
+
+        repositorioFornecedores.Cadastrar(novoFornecedor);
+
+        return Result.Ok();
+    }
+
     public List<ListarFornecedoresDto> SelecionarTodos()
     {
         List<Fornecedores> fornecedores = repositorioFornecedores.SelecionarTodos();
@@ -34,4 +47,5 @@ public class ServicoFornecedores
             new DetalhesFornecedoresDto(fornecedores.Id, fornecedores.Nome,  fornecedores.Telefone, fornecedores.Cnpj)
         );
     }
+
 }
