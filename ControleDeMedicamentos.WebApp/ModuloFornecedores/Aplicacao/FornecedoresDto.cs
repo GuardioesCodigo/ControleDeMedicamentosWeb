@@ -13,6 +13,13 @@ public record CadastrarFornecedoresDto(
     string CNPJ    
 );
 
+public record EditarFornecedoresDto(
+    Guid Id,
+    string Nome,
+    string Telefone,
+    string CNPJ    
+);
+
 public record DetalhesFornecedoresDto(
     Guid Id,
     string Nome,

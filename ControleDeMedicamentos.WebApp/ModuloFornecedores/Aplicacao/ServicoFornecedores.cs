@@ -17,7 +17,7 @@ public class ServicoFornecedores
     public Result Cadastrar(CadastrarFornecedoresDto dtos)
     {
         if (ExisteFornecedorComCnjp(dtos.CNPJ))
-            return Falha("Cnpj", "Já existe um fornecedor com este CNPJ.");
+            return Falha("Cnpj", "Já existe um Fornecedor com este CNPJ.");
 
         Fornecedores novoFornecedor = new Fornecedores(
             dtos.Nome,
@@ -26,6 +26,26 @@ public class ServicoFornecedores
         );
 
         repositorioFornecedores.Cadastrar(novoFornecedor);
+
+        return Result.Ok();
+    }
+
+    public Result Editar(EditarFornecedoresDto dto)
+    {
+        if (ExisteFornecedorComCnjp(dto.CNPJ, dto.Id))
+            return Falha(nameof(dto.CNPJ), "Já existe um Fornecedor com este CNPJ");
+
+        Fornecedores fornecedorAtualizado = new Fornecedores(dto.Nome, dto.Telefone, dto.CNPJ);
+
+        Result resultadoValidacao = ValidarEntidade(fornecedorAtualizado);
+
+        if (resultadoValidacao.IsFailed)
+            return resultadoValidacao;
+
+        bool conseguiuEditar = repositorioFornecedores.Editar(dto.Id, fornecedorAtualizado);
+
+        if (!conseguiuEditar)
+            return Result.Fail("Fornecedor não encontrado.");
 
         return Result.Ok();
     }
@@ -64,6 +84,16 @@ public class ServicoFornecedores
         return Result.Ok(
             new DetalhesFornecedoresDto(fornecedores.Id, fornecedores.Nome,  fornecedores.Telefone, fornecedores.Cnpj)
         );
+    }
+
+    private static Result ValidarEntidade(Fornecedores fornecedores)
+    {
+        List<string> erros = fornecedores.Validar();
+
+        if (erros.Count == 0)
+            return Result.Ok();
+
+        return Result.Fail(new Error(erros.First()).WithMetadata("Campo", string.Empty));
     }
 
     private static Result Falha(string campo, string mensagem)

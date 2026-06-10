@@ -22,3 +22,19 @@ public record CadastrarFornecedoresViewModel(
     [RegularExpression( @"^\d{14}$", ErrorMessage = "O campo \"CNPJ\" deve conter 14 dígitos.")]
     string CNPJ
 );
+
+public record EditarFornecedoresViewModel(
+    Guid Id,
+
+    [Required(ErrorMessage = "O campo \"Nome\" deve ser preenchido.")]
+    [StringLength(100, MinimumLength = 3, ErrorMessage = "O campo \"Nome\" deve conter entre 3 e 100 caracteres.")]
+    string Nome,
+
+    [Required(ErrorMessage = "O campo \"Telefone\" deve ser preenchido.")]
+    [RegularExpression( @"^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$", ErrorMessage = "O campo \"Telefone\" deve estar em um formato válido.")]
+    string Telefone,
+
+    [Required(ErrorMessage = "O campo \"CNPJ\" deve ser preenchido.")]
+    [RegularExpression( @"^\d{14}$", ErrorMessage = "O campo \"CNPJ\" deve conter 14 dígitos.")]
+    string CNPJ
+);
