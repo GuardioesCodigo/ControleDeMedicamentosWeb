@@ -22,4 +22,16 @@ public class ServicoFornecedores
             .Select(f => new ListarFornecedoresDto(f.Id, f.Nome, f.Telefone, f.Cnpj))
             .ToList();
     }
+
+    public Result<DetalhesFornecedoresDto> SelecionarPorId(Guid id)
+    {
+        Fornecedores? fornecedores = repositorioFornecedores.SelecionarPorId(id);
+
+        if (fornecedores == null)
+            return Result.Fail("Fornecedor não encontrado");
+
+        return Result.Ok(
+            new DetalhesFornecedoresDto(fornecedores.Id, fornecedores.Nome,  fornecedores.Telefone, fornecedores.Cnpj)
+        );
+    }
 }

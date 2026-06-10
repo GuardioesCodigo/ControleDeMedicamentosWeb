@@ -6,3 +6,10 @@ public record ListarFornecedoresDto(
     string Telefone,
     string CNPJ
 );
+
+public record DetalhesFornecedoresDto(
+    Guid Id,
+    string Nome,
+    string Telefone,
+    string CNPJ
+);
