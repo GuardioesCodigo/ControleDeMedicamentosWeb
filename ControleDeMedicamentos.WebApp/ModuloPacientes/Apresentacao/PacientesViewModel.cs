@@ -1,18 +1,41 @@
-using System;
 using System.ComponentModel.DataAnnotations;
+
 namespace ControleDeMedicamentos.WebApp.ModuloPacientes.Views;
 
-public record PacienteViewModel
+// Usada para Cadastrar e Editar (contém todos os dados e validações)
+public class PacienteViewModel
 {
-    [Required(ErrorMessage = "O CPF é obrigatório.")]
-    [RegularExpression(@"^\d{11}$", ErrorMessage = "O CPF deve conter exatamente 11 dígitos.")]
-    public string CPF { get; set; }
+    public Guid? Id { get; set; } // O ID é nulo no cadastro, mas preenchido na edição
 
-    [Required(ErrorMessage = "O cartão do SUS é obrigatório.")]
-    [RegularExpression(@"^\d{15}$", ErrorMessage = "O cartão do SUS deve conter exatamente 15 dígitos.")]
-    public string CartaoSus { get; set; }
+    [Required(ErrorMessage = "O nome é obrigatório.")]
+    [StringLength(100, MinimumLength = 3, ErrorMessage = "O nome deve ter entre 3 e 100 caracteres.")]
+    public string Nome { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "O telefone é obrigatório.")]
-    [RegularExpression(@"^\(\d{2}\) \d{4,5}-\d{4}$", ErrorMessage = "Formato de telefone inválido. Use (XX) XXXX-XXXX ou (XX) XXXXX-XXXX.")]
-    public string Telefone { get; set; }
-    }
+    public string Telefone { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "O cartão do SUS é obrigatório.")]
+    public string CartaoSus { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "O CPF é obrigatório.")]
+    public string CPF { get; set; } = string.Empty;
+}
+
+// Usada na Listagem (Index) - O foco aqui é exibir os dados e permitir ações
+public class ListarPacienteViewModel
+{
+    public Guid Id { get; set; } // Necessário para gerar o link de Editar/Excluir
+
+    public string Nome { get; set; } = string.Empty;
+    public string Telefone { get; set; } = string.Empty;
+    public string CartaoSus { get; set; } = string.Empty;
+    public string CPF { get; set; } = string.Empty;
+}
+
+// Usada para confirmar a exclusão (evita erros e confirma a intenção)
+public class ExcluirPacienteViewModel
+{
+    public Guid Id { get; set; }
+    public string Nome { get; set; } = string.Empty;
+    public string CartaoSus { get; set; } = string.Empty;
+}

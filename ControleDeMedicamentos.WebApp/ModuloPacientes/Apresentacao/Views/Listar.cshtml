@@ -1,0 +1,30 @@
+﻿@model IEnumerable<ListarPacienteViewModel>
+@using ControleDeMedicamentos.WebApp.ModuloPacientes.Views
+
+<h1>Pacientes Cadastrados</h1>
+
+<a asp-action="Cadastrar" class="btn btn-primary">Novo Paciente</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Telefone</th>
+            <th>Cartão SUS</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+            <tr>
+                <td>@item.Nome</td>
+                <td>@item.Telefone</td>
+                <td>@item.CartaoSus</td>
+                <td>
+                    <a asp-action="Editar" asp-route-id="@item.Id">Editar</a> |
+                    <a asp-action="Excluir" asp-route-id="@item.Id">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

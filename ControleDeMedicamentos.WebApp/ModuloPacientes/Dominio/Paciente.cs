@@ -4,9 +4,9 @@ using ControleDeMedicamentos.WebApp.Compartilhado;
 using ControleDeMedicamentos.WebApp.Compartilhado.Dominio;
 using Microsoft.VisualBasic;
 
-namespace ControleDeMedicamentos.WebApp.ModuloPacientes;
+namespace ControleDeMedicamentos.WebApp.ModuloPacientes.Dominio;
 
-public class Paciente : EntidadeBase
+public class Paciente : EntidadeBase<Paciente>
 {
     public string Nome { get; set; } = string.Empty;
 
@@ -15,14 +15,13 @@ public class Paciente : EntidadeBase
     public string CartaoSus { get; set; } = string.Empty;
 
     public string CPF { get; set; } = string.Empty;
-    public override void AtualizarDados(EntidadeBase entidadeAtualizada)
+    public override void Atualizar(Paciente entidadeAtualizada)
     {
-        Paciente pacienteAtualizado = (Paciente)entidadeAtualizada;
 
-        Nome = pacienteAtualizado.Nome;
-        Telefone = pacienteAtualizado.Telefone;
-        CartaoSus = pacienteAtualizado.CartaoSus;
-        CPF = pacienteAtualizado.CPF;
+        Nome = entidadeAtualizada.Nome;
+        Telefone = entidadeAtualizada.Telefone;
+        CartaoSus = entidadeAtualizada.CartaoSus;
+        CPF = entidadeAtualizada.CPF;
     }
 
     public override List<string> Validar()
