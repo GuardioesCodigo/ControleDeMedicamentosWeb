@@ -58,3 +58,12 @@ public record EditarMedicamentosViewModel(
     [ValidateNever]
     List<OpcaoFornecedoresViewModel> Fornecedores
 );
+
+public record ExcluirMedicamentosViewModel(
+    Guid Id,
+    string Nome,
+    string Descricao,
+    int Quantidade,
+    Guid FornecedorId,
+    string FornecedorNome
+);

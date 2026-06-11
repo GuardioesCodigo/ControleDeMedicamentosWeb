@@ -1,6 +1,5 @@
 using AutoMapper;
 using ControleDeMedicamentos.WebApp.Compartilhado.Apresentacao.Extensions;
-using ControleDeMedicamentos.WebApp.ModuloFornecedores.Aplicacao;
 using ControleDeMedicamentos.WebApp.ModuloMedicamentos.Aplicacao;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
@@ -92,7 +91,34 @@ namespace ControleDeMedicamentos.WebApp.ModuloMedicamentos.Apresentacao
             }
 
             return RedirectToAction(nameof(Listar));
-            
+        }
+
+        [HttpGet]
+        public ActionResult Excluir (Guid id)
+        {
+            Result<DetalhesMedicamentosDto> resultado = servicoMedicamentos.SelecionarPorId(id);
+
+            if (resultado.IsFailed)
+            {
+                TempData.AddErrorMessage(resultado);
+
+                return RedirectToAction(nameof(Listar));
+            }           
+
+            ExcluirMedicamentosViewModel excluirVm = mapeador.Map<ExcluirMedicamentosViewModel>(resultado.Value); 
+
+            return View(excluirVm);
+        }
+
+        [HttpPost]
+        public ActionResult Excluir(ExcluirMedicamentosViewModel excluirVm)
+        {
+            Result resultado = servicoMedicamentos.Excluir(excluirVm.Id);
+
+            if (resultado.IsFailed)
+                TempData.AddErrorMessage(resultado);  
+
+            return RedirectToAction(nameof(Listar));        
         }
 
         private List<OpcaoFornecedoresViewModel> SelecionarFornecedores()

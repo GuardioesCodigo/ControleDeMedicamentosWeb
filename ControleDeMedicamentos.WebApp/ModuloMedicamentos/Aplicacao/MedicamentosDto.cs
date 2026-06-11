@@ -22,7 +22,6 @@ public record EditarMedicamentosDto(
     Guid FornecedorId,
     string Descricao,
     int Quantidade
-    
 );
 
 public record OpcaoFornecedoresDto(
@@ -36,5 +35,6 @@ public record DetalhesMedicamentosDto(
     string Nome,
     string Descricao,
     int Quantidade,
-    Guid FornecedorId
+    Guid FornecedorId,
+    string FornecedorNome
 );
