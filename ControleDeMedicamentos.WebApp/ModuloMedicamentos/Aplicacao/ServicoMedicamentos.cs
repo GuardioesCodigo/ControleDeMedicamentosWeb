@@ -19,6 +19,16 @@ public class ServicoMedicamentos
     {
         Fornecedores? fornecedoresSelecionado = repositorioFornecedores.SelecionarPorId(dto.FornecedorId);
 
+        bool existeDuplicado = repositorioMedicamentos
+            .SelecionarTodos()
+            .Any(m =>
+                m.Nome == dto.Nome &&
+                m.Fornecedor.Id == dto.FornecedorId
+            );
+
+        if (existeDuplicado)
+        return Result.Fail("Já existe um medicamento com este nome deste Fornecedor.");    
+
         if (fornecedoresSelecionado == null)
             return Falha(nameof(dto.FornecedorId), "Selecione um fornecedor válido.");
 
@@ -49,27 +59,34 @@ public class ServicoMedicamentos
         if (medicamentos == null)
             return Result.Fail("Medicamento não encontrado");
 
-        Fornecedores? fornecedoresSelecionado = repositorioFornecedores.SelecionarPorId(dto.FornecedorId);
+        bool existeDuplicado = repositorioMedicamentos
+            .SelecionarTodos()
+            .Any(m =>
+                m.Id != dto.Id &&
+                m.Nome == dto.Nome &&
+                m.Fornecedor.Id == dto.FornecedorId
+            );
 
-        if (fornecedoresSelecionado == null)
+        if (existeDuplicado)
+            return Result.Fail("Já existe um medicamento com este nome deste Fornecedor.");
+
+        Fornecedores? fornecedorSelecionado =
+            repositorioFornecedores.SelecionarPorId(dto.FornecedorId);
+
+        if (fornecedorSelecionado == null)
             return Falha(nameof(dto.FornecedorId), "Selecione um fornecedor válido.");
 
-        if (ExisteMedicamentoComMesmoFornecedor(dto.Nome, dto.FornecedorId))
-            return Falha(nameof(dto.Nome), "Já existe um medicamento com este nome deste Fornecedor.");
+        medicamentos.Nome = dto.Nome;
+        medicamentos.Descricao = dto.Descricao;
+        medicamentos.Quantidade = dto.Quantidade;
+        medicamentos.Fornecedor = fornecedorSelecionado;
 
-        Medicamentos medicamentosAtualizado = new Medicamentos(
-            dto.Nome,
-            dto.Descricao,
-            dto.Quantidade,
-            fornecedoresSelecionado
-        );
-
-        Result resultadoValidacao = ValidarEntidade(medicamentosAtualizado);
+        var resultadoValidacao = ValidarEntidade(medicamentos);
 
         if (resultadoValidacao.IsFailed)
             return resultadoValidacao;
 
-        repositorioMedicamentos.Editar(dto.Id, medicamentosAtualizado);
+        repositorioMedicamentos.Editar(dto.Id, medicamentos);
 
         return Result.Ok();
     }

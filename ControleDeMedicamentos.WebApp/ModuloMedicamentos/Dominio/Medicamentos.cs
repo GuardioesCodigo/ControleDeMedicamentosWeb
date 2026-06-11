@@ -10,7 +10,7 @@ public class Medicamentos : EntidadeBase<Medicamentos>
     public string Descricao { get; set; } = string.Empty;
     public int Quantidade { get; set; }
     public Fornecedores Fornecedor { get; set; } = null!;
-    public bool EstaEmFalta => Quantidade == 0;
+    public bool EstaEmFalta => Quantidade < 20;
 
     public Medicamentos() { }
 

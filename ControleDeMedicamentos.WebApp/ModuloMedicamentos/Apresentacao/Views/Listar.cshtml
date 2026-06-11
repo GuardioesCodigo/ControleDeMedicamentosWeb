@@ -37,21 +37,29 @@ else
 
                 <tbody>
 
-                    @foreach (ListarMedicamentosViewModel f in Model)
+                    @foreach (ListarMedicamentosViewModel m in Model)
                     {
                          <tr>
-                            <td>@f.Id</td>
-                            <td>@f.Nome</td>
-                            <td>@f.Quantidade</td>
-                            <td>@f.FornecedorNome</td>  
+                            <td>@m.Id</td>
+                            <td>@m.Nome</td>
+                            <td>
+                                @m.Quantidade
+
+                                @if (m.Quantidade < 20)
+                                {
+                                    <span class="badge bg-danger ms-2">Em falta</span>
+                                }
+
+                            </td>
+                            <td>@m.FornecedorNome</td>  
                             <td>
                                 <a class="btn btn-outline-secondary rounded-pill px-3"
                                     asp-action="Editar"
-                                    asp-route-id="@f.Id">Editar</a>
+                                    asp-route-id="@m.Id">Editar</a>
 
                                 <a class="btn btn-outline-danger rounded-pill px-3"
                                     asp-action="Excluir"
-                                    asp-route-id="@f.Id">Excluir</a>
+                                    asp-route-id="@m.Id">Excluir</a>
                             </td>                          
                         </tr>
                     }
