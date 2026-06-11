@@ -1,10 +1,59 @@
-﻿@model ControleDeMedicamentos.WebApp.ModuloPacientes.Views.ExcluirPacienteViewModel
+﻿@{
+    Layout = "_Layout";
+}
+
+
+@model ControleDeMedicamentos.WebApp.ModuloPacientes.Views.ExcluirPacienteViewModel
 @using ControleDeMedicamentos.WebApp.ModuloPacientes.Views
 
-<h3>Tem certeza que deseja excluir o paciente @Model.Nome?</h3>
+<div class="container d-flex justify-content-center align-items-center"
+     style="min-height: calc(112vh - 120px);">
 
-<form asp-action="Excluir" method="post">
-    <input type="hidden" asp-for="Id" />
-    <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
-</form>
+    <form class="card border-0 shadow-lg p-4 rounded-4 w-100"
+          style="max-width: 620px;"
+          asp-action="Excluir"
+          asp-route-id="@Model.Id"
+          method="post">
+
+        <input asp-for="Id" type="hidden">
+
+        <h2 class="mb-4">Exclusão de Paciente</h2>
+
+        <div class="alert alert-warning" role="alert">
+            Deseja realmente excluir esse Paciente?
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="Nome" class="form-label fw-semibold">Nome</label>
+            <input asp-for="Nome" type="text" class="form-control form-control-lg rounded-3 shadow-sm" readonly>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="Telefone" class="form-label fw-semibold">Telefone</label>
+            <input asp-for="Telefone" type="text" class="form-control form-control-lg rounded-3 shadow-sm" readonly>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="CartaoSus" class="form-label fw-semibold">Cartão SUS</label>
+            <input asp-for="CartaoSus" type="text" class="form-control form-control-lg rounded-3 shadow-sm" readonly>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="CPF" class="form-label fw-semibold">CPF</label>
+            <input asp-for="CPF" type="text" class="form-control form-control-lg rounded-3 shadow-sm" readonly>
+        </div>
+
+        <div class="d-flex justify-content-end gap-3 mt-4">
+            
+            <a class="btn btn-outline-secondary rounded-pill"
+               asp-action="Listar">
+                Voltar
+            </a>
+
+            <button type="submit" class="btn btn-outline-danger rounded-pill">
+                Excluir
+            </button>
+        </div>
+
+    </form>
+</div>
