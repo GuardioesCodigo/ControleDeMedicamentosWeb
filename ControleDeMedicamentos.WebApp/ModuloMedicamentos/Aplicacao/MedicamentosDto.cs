@@ -6,7 +6,20 @@ public record ListarMedicamentosDto(
     string Descricao,
     int Quantidade,
     Guid FornecedorId,
-    string FornecedorCnpj
+    string FornecedorNome
+);
+
+public record CadastrarMedicamentosDto(
+    string Nome,
+    string Descricao,
+    int Quantidade,
+    Guid FornecedorId
+);
+
+public record OpcaoFornecedoresDto(
+    Guid Id,
+    string Nome,
+    string Cnpj
 );
 
 public record DetalhesMedicamentosDto(
@@ -14,6 +27,5 @@ public record DetalhesMedicamentosDto(
     string Nome,
     string Descricao,
     int Quantidade,
-    Guid FornecedorId,
-    string FornecedorCnpj
+    Guid FornecedorId
 );

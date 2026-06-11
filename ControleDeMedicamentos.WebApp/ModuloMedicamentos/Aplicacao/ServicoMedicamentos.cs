@@ -1,5 +1,4 @@
-using System;
-using System.Security.Cryptography.X509Certificates;
+using ControleDeMedicamentos.WebApp.ModuloFornecedores.Dominio;
 using ControleDeMedicamentos.WebApp.ModuloMedicamentos.Dominio;
 using FluentResults;
 
@@ -8,10 +7,39 @@ namespace ControleDeMedicamentos.WebApp.ModuloMedicamentos.Aplicacao;
 public class ServicoMedicamentos
 {
     private readonly IRepositorioMedicamentos repositorioMedicamentos;
+    private readonly IRepositorioFornecedores repositorioFornecedores;
 
-    public ServicoMedicamentos(IRepositorioMedicamentos repositorioMedicamentos)
+    public ServicoMedicamentos(IRepositorioMedicamentos repositorioMedicamentos, IRepositorioFornecedores repositorioFornecedores)
     {
         this.repositorioMedicamentos = repositorioMedicamentos;
+        this.repositorioFornecedores = repositorioFornecedores;
+    }
+
+    public Result Cadastrar(CadastrarMedicamentosDto dto)
+    {
+        Fornecedores? fornecedoresSelecionado = repositorioFornecedores.SelecionarPorId(dto.FornecedorId);
+
+        if (fornecedoresSelecionado == null)
+            return Falha(nameof(dto.FornecedorId), "Selecione um fornecedor válido.");
+
+        if (ExisteMedicamentoComMesmoFornecedor(dto.Nome, dto.FornecedorId))
+            return Falha(nameof(dto.Nome), "Já existe um medicamento com este nome deste Fornecedor.");
+
+        Medicamentos novoMedicamentos = new Medicamentos(
+            dto.Nome,
+            dto.Descricao,
+            dto.Quantidade,
+            fornecedoresSelecionado
+        );
+
+        Result resultadoValidacao = ValidarEntidade(novoMedicamentos);
+
+        if (resultadoValidacao.IsFailed)
+            return resultadoValidacao;
+
+        repositorioMedicamentos.Cadastrar(novoMedicamentos);
+
+        return Result.Ok();
     }
 
     public List<ListarMedicamentosDto> SelecionarTodos()
@@ -19,7 +47,7 @@ public class ServicoMedicamentos
         List<Medicamentos> medicamentos = repositorioMedicamentos.SelecionarTodos();
 
         return medicamentos
-            .Select(m => new ListarMedicamentosDto(m.Id, m.Nome, m.Descricao, m.Quantidade, m.Fornecedor.Id, m.Fornecedor.Cnpj))
+            .Select(m => new ListarMedicamentosDto(m.Id, m.Nome, m.Descricao, m.Quantidade, m.Fornecedor.Id, m.Fornecedor.Nome))
             .ToList();
     }
 
@@ -36,9 +64,27 @@ public class ServicoMedicamentos
                 medicamentos.Nome,
                 medicamentos.Descricao,
                 medicamentos.Quantidade,
-                medicamentos.Fornecedor.Id,
-                medicamentos.Fornecedor.Cnpj
+                medicamentos.Fornecedor.Id
         ));
+    }
+
+    public List<OpcaoFornecedoresDto> SelecionarFornecedores()
+    {
+        return repositorioFornecedores
+            .SelecionarTodos()
+            .Select(f => new OpcaoFornecedoresDto(f.Id, f.Nome, f.Cnpj))
+            .ToList();
+    }
+
+    private bool ExisteMedicamentoComMesmoFornecedor(string nome, Guid fornecedorId, Guid? idIgnorado = null)
+    {
+        return repositorioMedicamentos
+            .SelecionarTodos()
+            .Any(f =>
+                f.Id != idIgnorado &&
+                f.Fornecedor.Id == fornecedorId &&
+                string.Equals(f.Nome, nome, StringComparison.OrdinalIgnoreCase)
+            );
     }
 
     private static Result ValidarEntidade(Medicamentos medicamentos)
