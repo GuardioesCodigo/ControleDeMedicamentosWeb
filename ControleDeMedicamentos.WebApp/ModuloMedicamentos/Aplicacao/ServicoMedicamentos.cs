@@ -15,6 +15,29 @@ public class ServicoMedicamentos
         this.repositorioFornecedores = repositorioFornecedores;
     }
 
+    public List<ListarMedicamentosDto> SelecionarTodos(bool apenasEmFalta = false)
+    {
+        var medicamentos = repositorioMedicamentos.SelecionarTodos();
+
+        if (apenasEmFalta)
+        {
+            medicamentos = medicamentos
+                .Where(m => m.Quantidade < 20)
+                .ToList();
+        }
+
+        return medicamentos
+            .Select(m => new ListarMedicamentosDto(
+                m.Id,
+                m.Nome,
+                m.Descricao,
+                m.Quantidade,
+                m.Fornecedor.Id,
+                m.Fornecedor.Nome
+            ))
+            .ToList();
+    }
+
     public Result Cadastrar(CadastrarMedicamentosDto dto)
     {
         Fornecedores? fornecedoresSelecionado = repositorioFornecedores.SelecionarPorId(dto.FornecedorId);
