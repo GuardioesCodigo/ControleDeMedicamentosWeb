@@ -17,6 +17,7 @@ public class RepositorioPacienteEmArquivo : RepositorioBaseEmArquivo<Paciente>, 
 
     protected override List<Paciente> CarregarRegistros()
     {
-        return contexto.Paciente;
+        // Se contexto.Paciente for nulo, retorna uma lista vazia, caso contrário retorna a lista
+        return contexto.paciente;
     }
 }

@@ -1,11 +1,10 @@
-﻿@model IEnumerable<ListarPacienteViewModel>
+﻿@model ControleDeMedicamentos.WebApp.ModuloPacientes.Views.ExcluirPacienteViewModel
 @using ControleDeMedicamentos.WebApp.ModuloPacientes.Views
-
 
 <h3>Tem certeza que deseja excluir o paciente @Model.Nome?</h3>
 
 <form asp-action="Excluir" method="post">
     <input type="hidden" asp-for="Id" />
     <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
-    <a asp-action="Index">Cancelar</a>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
 </form>
