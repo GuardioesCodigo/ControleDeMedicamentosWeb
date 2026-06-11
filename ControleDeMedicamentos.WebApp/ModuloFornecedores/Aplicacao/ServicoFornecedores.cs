@@ -1,6 +1,7 @@
 using System;
 using ControleDeMedicamentos.WebApp.Compartilhado.Dominio;
 using ControleDeMedicamentos.WebApp.ModuloFornecedores.Dominio;
+using ControleDeMedicamentos.WebApp.ModuloMedicamentos.Dominio;
 using FluentResults;
 
 namespace ControleDeMedicamentos.WebApp.ModuloFornecedores.Aplicacao;
@@ -8,10 +9,12 @@ namespace ControleDeMedicamentos.WebApp.ModuloFornecedores.Aplicacao;
 public class ServicoFornecedores
 {
     private readonly IRepositorioFornecedores repositorioFornecedores;
+    private readonly IRepositorioMedicamentos repositorioMedicamentos;
 
-    public ServicoFornecedores(IRepositorioFornecedores repositorioFornecedores)
+    public ServicoFornecedores(IRepositorioFornecedores repositorioFornecedores, IRepositorioMedicamentos repositorioMedicamentos)
     {
         this.repositorioFornecedores = repositorioFornecedores;
+        this.repositorioMedicamentos = repositorioMedicamentos;
     }
 
     public Result Cadastrar(CadastrarFornecedoresDto dtos)
@@ -56,6 +59,15 @@ public class ServicoFornecedores
 
         if (fornecedores == null)
             return Result.Fail("Fornecedor não encontrado.");
+
+        bool possuiMedicamentos = repositorioMedicamentos
+            .SelecionarTodos()
+            .Any(m => m.Fornecedor.Id == id);
+
+        if (possuiMedicamentos)
+            return Result.Fail(
+                "Este fornecedor não pode ser excluído pois possui medicamentos vinculados."
+        );
 
         repositorioFornecedores.Excluir(id);
 
