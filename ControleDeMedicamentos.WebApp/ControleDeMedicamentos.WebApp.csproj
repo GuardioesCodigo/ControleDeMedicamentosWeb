@@ -14,6 +14,9 @@
     <Folder Include="Compartilhado\Infra\Arquivos\" />
     <Folder Include="ModuloCentroControle\Apresentacao\" />
     <Folder Include="ModuloCentroControle\Apresentacao\Views\" />
+    <Folder Include="ModuloEstoque\" />
+    <Folder Include="ModuloEstoque\Dominio\" />
+    <Folder Include="ModuloEstoque\Infra\" />
     <Folder Include="ModuloFornecedores\Aplicacao\" />
     <Folder Include="ModuloFornecedores\Apresentacao\" />
     <Folder Include="ModuloFornecedores\Apresentacao\Views\" />
