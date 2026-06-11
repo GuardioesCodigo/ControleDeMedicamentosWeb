@@ -29,6 +29,22 @@ public class ServicoMedicamentos
         if (existeDuplicado)
         return Result.Fail("Já existe um medicamento com este nome deste Fornecedor.");    
 
+        Medicamentos? existente = repositorioMedicamentos
+            .SelecionarTodos()
+            .FirstOrDefault(m =>
+                m.Nome == dto.Nome &&
+                m.Fornecedor.Id == dto.FornecedorId
+            );
+
+        if (existente != null)
+        {
+            existente.Quantidade += dto.Quantidade;
+
+            repositorioMedicamentos.Editar(existente.Id, existente);
+
+            return Result.Ok();
+        }
+
         if (fornecedoresSelecionado == null)
             return Falha(nameof(dto.FornecedorId), "Selecione um fornecedor válido.");
 
