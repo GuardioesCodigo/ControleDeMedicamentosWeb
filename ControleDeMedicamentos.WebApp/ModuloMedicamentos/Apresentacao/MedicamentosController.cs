@@ -1,5 +1,6 @@
 using AutoMapper;
 using ControleDeMedicamentos.WebApp.Compartilhado.Apresentacao.Extensions;
+using ControleDeMedicamentos.WebApp.ModuloFornecedores.Aplicacao;
 using ControleDeMedicamentos.WebApp.ModuloMedicamentos.Aplicacao;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
@@ -51,6 +52,47 @@ namespace ControleDeMedicamentos.WebApp.ModuloMedicamentos.Apresentacao
             }
 
             return RedirectToAction(nameof(Listar));
+        }
+
+        [HttpGet]
+        public ActionResult Editar(Guid id)
+        {
+            Result<DetalhesMedicamentosDto> resultado = servicoMedicamentos.SelecionarPorId(id);
+
+            if (resultado.IsFailed)
+            {
+                TempData.AddErrorMessage(resultado);
+
+                return RedirectToAction(nameof(Listar));
+            }
+
+            EditarMedicamentosViewModel editarVm = 
+                mapeador.Map<EditarMedicamentosViewModel>(resultado.Value) with {Fornecedores = SelecionarFornecedores()};
+
+            return View(editarVm);
+        }
+
+        [HttpPost]
+        public ActionResult Editar(EditarMedicamentosViewModel editarVm)
+        {
+            if (!ModelState.IsValid)
+                return View(editarVm with {Fornecedores = SelecionarFornecedores() });
+
+            EditarMedicamentosDto dto = mapeador.Map<EditarMedicamentosDto>(editarVm);
+
+            Result resultado = servicoMedicamentos.Editar(dto);
+
+            if (resultado.IsFailed)
+            {
+                ModelState.AddModelError(resultado);
+
+                ModelState.Remove(nameof(CadastrarMedicamentosViewModel.Fornecedores));
+
+                return View(editarVm with {Fornecedores = SelecionarFornecedores() });
+            }
+
+            return RedirectToAction(nameof(Listar));
+            
         }
 
         private List<OpcaoFornecedoresViewModel> SelecionarFornecedores()

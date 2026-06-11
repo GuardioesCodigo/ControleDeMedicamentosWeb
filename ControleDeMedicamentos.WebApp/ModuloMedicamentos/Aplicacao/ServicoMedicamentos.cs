@@ -42,6 +42,38 @@ public class ServicoMedicamentos
         return Result.Ok();
     }
 
+    public Result Editar(EditarMedicamentosDto dto)
+    {
+        Medicamentos? medicamentos = repositorioMedicamentos.SelecionarPorId(dto.Id);
+
+        if (medicamentos == null)
+            return Result.Fail("Medicamento não encontrado");
+
+        Fornecedores? fornecedoresSelecionado = repositorioFornecedores.SelecionarPorId(dto.FornecedorId);
+
+        if (fornecedoresSelecionado == null)
+            return Falha(nameof(dto.FornecedorId), "Selecione um fornecedor válido.");
+
+        if (ExisteMedicamentoComMesmoFornecedor(dto.Nome, dto.FornecedorId))
+            return Falha(nameof(dto.Nome), "Já existe um medicamento com este nome deste Fornecedor.");
+
+        Medicamentos medicamentosAtualizado = new Medicamentos(
+            dto.Nome,
+            dto.Descricao,
+            dto.Quantidade,
+            fornecedoresSelecionado
+        );
+
+        Result resultadoValidacao = ValidarEntidade(medicamentosAtualizado);
+
+        if (resultadoValidacao.IsFailed)
+            return resultadoValidacao;
+
+        repositorioMedicamentos.Editar(dto.Id, medicamentosAtualizado);
+
+        return Result.Ok();
+    }
+
     public List<ListarMedicamentosDto> SelecionarTodos()
     {
         List<Medicamentos> medicamentos = repositorioMedicamentos.SelecionarTodos();

@@ -13,5 +13,9 @@ public class MedicamentosProfile : Profile
         CreateMap<ListarMedicamentosDto ,ListarMedicamentosViewModel>();
 
         CreateMap<CadastrarMedicamentosViewModel, CadastrarMedicamentosDto>();
+        CreateMap<EditarMedicamentosViewModel, EditarMedicamentosDto>();
+
+        CreateMap<DetalhesMedicamentosDto, EditarMedicamentosViewModel>()
+            .ForCtorParam("Fornecedores", opt => opt.MapFrom(_ => new List<OpcaoFornecedoresViewModel>()));
     }
 }
