@@ -67,3 +67,12 @@ public record ExcluirMedicamentosViewModel(
     Guid FornecedorId,
     string FornecedorNome
 );
+
+public record DetalhesMedicamentosViewModel(
+    Guid Id,
+    string Nome,
+    string Descricao,
+    int Quantidade,
+    Guid FornecedorId,
+    string FornecedorNome
+);

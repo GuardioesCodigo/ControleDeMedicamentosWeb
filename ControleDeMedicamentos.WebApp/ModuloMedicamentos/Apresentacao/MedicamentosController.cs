@@ -131,5 +131,20 @@ public class MedicamentosController(ServicoMedicamentos servicoMedicamentos, IMa
         return mapeador.Map<List<OpcaoFornecedoresViewModel>>(dtos);
     }
 
-}
+    [HttpGet]
+    public ActionResult Detalhes(Guid id)
+    {
+        Result<DetalhesMedicamentosDto> resultado = servicoMedicamentos.SelecionarPorId(id);
 
+        if (resultado.IsFailed)
+        {
+            TempData.AddErrorMessage(resultado);
+
+            return RedirectToAction(nameof(Listar));
+        }  
+
+        DetalhesMedicamentosViewModel vm = mapeador.Map<DetalhesMedicamentosViewModel>(resultado.Value);
+
+        return View(vm);
+    }
+}

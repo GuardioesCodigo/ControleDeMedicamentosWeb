@@ -61,10 +61,13 @@ else
                                 {
                                     <span class="badge bg-danger ms-2">Em falta</span>
                                 }
-
                             </td>
                             <td>@m.FornecedorNome</td>  
                             <td>
+                                <a class="btn btn-outline-primary rounded-pill px-3"
+                                    asp-action="Detalhes"
+                                    asp-route-id="@m.Id"> Detalhes</a> 
+                                      
                                 <a class="btn btn-outline-secondary rounded-pill px-3"
                                     asp-action="Editar"
                                     asp-route-id="@m.Id">Editar</a>

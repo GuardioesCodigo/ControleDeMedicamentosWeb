@@ -19,5 +19,6 @@ public class MedicamentosProfile : Profile
             .ForCtorParam("Fornecedores", opt => opt.MapFrom(_ => new List<OpcaoFornecedoresViewModel>()));
         
         CreateMap<DetalhesMedicamentosDto, ExcluirMedicamentosViewModel>();
+        CreateMap<DetalhesMedicamentosDto, DetalhesMedicamentosViewModel>();
     }
 }
