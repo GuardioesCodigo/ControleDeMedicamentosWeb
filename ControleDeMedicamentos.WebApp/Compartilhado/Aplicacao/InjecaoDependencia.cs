@@ -14,6 +14,6 @@ public static class InjecaoDependencia
         services.AddScoped<ServicoFornecedores>();
         services.AddScoped<ServicoMedicamentos>();
         services.AddScoped<ServicoPaciente>();
-        services.AddScoped<IRepositorio<Paciente>, RepositorioPacienteEmArquivo>();
+        services.AddScoped<ServicoFuncionario>();
     }
 }

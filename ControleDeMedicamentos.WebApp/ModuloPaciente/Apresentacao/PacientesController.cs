@@ -21,55 +21,55 @@ public class PacienteController : Controller
     }
 
     // GET: /paciente/novo
-    [HttpGet("novo")]
-    public IActionResult Cadastrar() => View(new PacienteViewModel());
 
-    // POST: /paciente/novo
+    [HttpGet("novo")]
+    public IActionResult Cadastrar()
+    {
+        return View(new PacienteViewModel());
+    }
     [HttpPost("novo")]
     public IActionResult Cadastrar(PacienteViewModel model)
     {
+        // Se este método estiver disparando 405, 
+        // o problema é que o servidor está tentando acessar 
+        // a rota pelo método GET, ou há um conflito de nomes.
+        
         if (!ModelState.IsValid) return View(model);
 
         try
         {
-            // Converte a ViewModel para o domínio (Paciente)
             var paciente = _mapper.Map<Paciente>(model);
-
-            // Chama o serviço para persistir
             _servico.Cadastrar(paciente);
-
-            //Redireciona após Salvar
             return RedirectToAction("Listar");
         }
         catch (Exception ex)
         {
-            // Se der erro (ex: CPF duplicado), mostra o erro na tela
             ModelState.AddModelError("", ex.Message);
             return View(model);
         }
     }
 
-   [Route("listar")]
-    public IActionResult Listar()
-    {
-        var pacientes = _servico.SelecionarTodos();
-    
-        // O mapper converte a lista de entidades para uma lista de ViewModels
-        var model = _mapper.Map<List<ListarPacienteViewModel>>(pacientes);
+    [Route("listar")]
+        public IActionResult Listar()
+        {
+            var pacientes = _servico.SelecionarTodos();
         
-        return View(model);
+            // O mapper converte a lista de entidades para uma lista de ViewModels
+            var model = _mapper.Map<List<ListarPacienteViewModel>>(pacientes);
+            
+            return View(model);
+        }
+
+        [HttpGet("editar/{id:guid}")]
+        public IActionResult Editar(Guid id)
+        {
+            var paciente = _servico.SelecionarPorId(id);
+            if (paciente == null) return NotFound(); // Proteção caso o ID não exista
+
+            // Converte a entidade Paciente para o PacienteViewModel
+            var model = _mapper.Map<PacienteViewModel>(paciente);
+            return View(model);
     }
-
-    [HttpGet("editar/{id:guid}")]
-    public IActionResult Editar(Guid id)
-    {
-        var paciente = _servico.SelecionarPorId(id);
-        if (paciente == null) return NotFound(); // Proteção caso o ID não exista
-
-        // Converte a entidade Paciente para o PacienteViewModel
-        var model = _mapper.Map<PacienteViewModel>(paciente);
-        return View(model);
-}
 
     [HttpPost("editar/{id:guid}")]
     public IActionResult Editar(Guid id, PacienteViewModel model)

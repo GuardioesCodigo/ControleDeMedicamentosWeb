@@ -24,30 +24,33 @@ public class Paciente : EntidadeBase<Paciente>
         CPF = entidadeAtualizada.CPF;
     }
 
-    public override List<string> Validar()
+        public override List<string> Validar()
     {
         List<string> erros = new List<string>();
 
+        // Validação de Nome
         if (string.IsNullOrWhiteSpace(Nome))
             erros.Add("O nome é obrigatório.");
-
         else if (Nome.Length < 3 || Nome.Length > 100)
             erros.Add("O nome deve ter entre 3 e 100 caracteres.");
 
-        bool telefoneValido = Regex.IsMatch(Telefone, @"^\(\d{2}\)\s\d{4,5}-\d{4}$");
+        // Validação de Telefone
+        if (string.IsNullOrWhiteSpace(Telefone))
+            erros.Add("O campo \"Telefone\" deve ser preenchido.");
+        else if (!Regex.IsMatch(Telefone, @"^\d{11}$"))
+            erros.Add("O campo \"Telefone\" deve conter exatamente 11 dígitos numéricos.");
 
-        if (!telefoneValido)
-            erros.Add("Telefone inválido.");
+        // Validação de Cartão SUS (15 dígitos)
+        if (string.IsNullOrWhiteSpace(CartaoSus))
+            erros.Add("O campo \"Cartão SUS\" deve ser preenchido.");
+        else if (!Regex.IsMatch(CartaoSus, @"^\d{15}$"))
+            erros.Add("O cartão SUS deve conter exatamente 15 dígitos numéricos.");
 
-        bool susValido = Regex.IsMatch(CartaoSus, @"^\d{15}$");
-
-        if (!susValido)
-            erros.Add("Cartão SUS deve conter 15 digitos.");
-
-        bool cpfValido = Regex.IsMatch(CPF, @"^\d{11}$");
-
-        if (!cpfValido)
-            erros.Add("CPF deve conter 11 dígitos.");
+        // Validação de CPF (11 dígitos)
+        if (string.IsNullOrWhiteSpace(CPF))
+            erros.Add("O campo \"CPF\" deve ser preenchido.");
+        else if (!Regex.IsMatch(CPF, @"^\d{11}$"))
+            erros.Add("O CPF deve conter exatamente 11 dígitos numéricos.");
 
         return erros;
     }
