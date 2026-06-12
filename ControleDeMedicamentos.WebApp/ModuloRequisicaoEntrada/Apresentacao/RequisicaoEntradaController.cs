@@ -21,16 +21,14 @@ public class RequisicaoEntradaController(ServicoRequisicaoEntrada servicoRequisi
     [HttpGet]
     public ActionResult CadastrarEntrada()
     {
-        CadastrarRequisicaoEntradaViewModel cadastrarVm = new CadastrarRequisicaoEntradaViewModel(
-            null,
+       return View(new CadastrarRequisicaoEntradaViewModel(
+            DateTime.Now,
             Guid.Empty,
             Guid.Empty,
             0,
             SelecionarFuncionarios(),
             SelecionarMedicamentos()
-        );
-
-        return View(cadastrarVm);
+        ));
     }
 
     [HttpPost]
