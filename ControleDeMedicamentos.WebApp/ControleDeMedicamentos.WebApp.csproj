@@ -27,6 +27,9 @@
     <Folder Include="ModuloMedicamentos\Apresentacao\Views\" />
     <Folder Include="ModuloMedicamentos\Dominio\" />
     <Folder Include="ModuloMedicamentos\Infra\" />
+    <Folder Include="ModuloRequisicaoSaida\" />
+    <Folder Include="ModuloRequisicaoSaida\Aplicacao\" />
+    <Folder Include="ModuloRequisicaoSaida\Dominio\" />
     <Folder Include="wwwroot\" />
     <Folder Include="wwwroot\Img\" />
     <Folder Include="wwwroot\lib\" />

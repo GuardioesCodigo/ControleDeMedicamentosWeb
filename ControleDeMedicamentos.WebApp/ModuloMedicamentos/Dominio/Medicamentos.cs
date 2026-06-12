@@ -58,4 +58,15 @@ public class Medicamentos : EntidadeBase<Medicamentos>
         this.Quantidade = entidadeAtualizada.Quantidade;
         this.Fornecedor = entidadeAtualizada.Fornecedor;
     }
+
+    public void SubtrairQuantidade(int quantidade)
+    {
+        if (quantidade <= 0)
+            throw new Exception("A quantidade para retirada deve ser maior que zero.");
+
+        if (quantidade > Quantidade)
+            throw new Exception($"Estoque insuficiente. Disponível: {Quantidade}");
+
+        Quantidade -= quantidade;
+    }
 }
