@@ -5,41 +5,48 @@
 
 @model ControleDeMedicamentos.WebApp.ModuloFuncionarios.Apresentacao.FuncionarioViewModel
 
-<div class="container mt-4">
-    <div class="card shadow-sm border-0">
-        <div class="card-header bg-primary text-white">
-            <h4 class="mb-0">Novo Funcionário</h4>
-        </div>
-        <div class="card-body p-4">
-            <form asp-controller="Funcionarios" asp-action="Cadastrar" method="post">
-                <div asp-validation-summary="ModelOnly" class="alert alert-danger p-2"></div>
-                
-                <div class="mb-3">
-                    <label asp-for="Nome" class="form-label">Nome Completo</label>
-                    <input asp-for="Nome" class="form-control rounded-pill" />
-                    <span asp-validation-for="Nome" class="text-danger"></span>
-                </div>
+<div class="container d-flex justify-content-center align-items-center" 
+     style="min-height: calc(100vh - 120px);">
 
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label asp-for="Telefone" class="form-label">Telefone</label>
-                        <input asp-for="Telefone" id="Telefone" class="form-control rounded-pill" placeholder="(00) 00000-0000" />
-                        <span asp-validation-for="Telefone" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label asp-for="Cpf" class="form-label">CPF</label>
-                        <input asp-for="Cpf" id="Cpf" class="form-control rounded-pill" placeholder="00000000000" />
-                        <span asp-validation-for="Cpf" class="text-danger"></span>
-                    </div>
-                </div>
+    <form class="card border-0 shadow-lg p-4 rounded-4 w-100" 
+          style="max-width: 620px;"
+          asp-controller="Funcionarios" 
+          asp-action="Cadastrar" 
+          method="post">
 
-                <div class="d-flex justify-content-end mt-4">
-                    <a asp-controller="Funcionarios" asp-action="Listar" class="btn btn-outline-secondary rounded-pill px-4 me-2">Cancelar</a>
-                    <button type="submit" class="btn btn-primary rounded-pill px-4">Salvar Funcionário</button>
-                </div>
-            </form>
+        @Html.AntiForgeryToken()
+
+        <h2 class="mb-4">Cadastro de Funcionário</h2>
+
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-4">
+            <label asp-for="Nome" class="form-label fw-semibold">Nome Completo</label>
+            <input asp-for="Nome" type="text" class="form-control form-control-lg rounded-3 shadow-sm">
+            <span asp-validation-for="Nome" class="text-danger small"></span>
         </div>
-    </div>
+
+        <div class="mb-4">
+            <label asp-for="Telefone" class="form-label fw-semibold">Telefone</label>
+            <input asp-for="Telefone" id="Telefone" type="text" class="form-control form-control-lg rounded-3 shadow-sm">
+            <span asp-validation-for="Telefone" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="Cpf" class="form-label fw-semibold">CPF</label>
+            <input asp-for="Cpf" id="Cpf" type="text" class="form-control form-control-lg rounded-3 shadow-sm">
+            <span asp-validation-for="Cpf" class="text-danger small"></span>
+        </div>
+
+        <div class="d-flex justify-content-end gap-3 mt-4">
+            <a class="btn btn-outline-danger rounded-pill px-4" asp-controller="Funcionarios" asp-action="Listar">
+                Voltar
+            </a>
+            <button type="submit" class="btn btn-outline-success rounded-pill px-4">
+                Confirmar
+            </button>
+        </div>
+    </form>
 </div>
 
 @section Scripts {
@@ -50,11 +57,9 @@
 
     <script>
         $(document).ready(function(){
-            // Aplica as máscaras
             $('#Telefone').mask('(00) 00000-0000');
-            $('#Cpf').mask('000.000.000-00'); // Ajuste o formato se necessário
+            $('#Cpf').mask('000.000.000-00');
             
-            // Remove as máscaras antes de enviar para o servidor
             $('form').submit(function() {
                 $('#Telefone').unmask();
                 $('#Cpf').unmask();
