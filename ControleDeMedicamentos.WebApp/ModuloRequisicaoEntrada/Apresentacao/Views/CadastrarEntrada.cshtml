@@ -16,7 +16,7 @@
 
     <form class="card border-0 shadow-lg p-4 rounded-4 w-100"
           style="max-width: 620px;"
-          asp-action="Cadastrar"
+          asp-action="CadastrarEntrada"
           method="post">
 
         <h2>Cadastro de Requisição de Entrada</h2>
@@ -65,10 +65,10 @@
             <select asp-for="FuncionarioId" class="form-select">
                 <option value="">Selecione um Funcionário</option>
 
-                @foreach (OpcaoFuncionariosViewModel funcionario in Model.Funcionarios)
+                @foreach (OpcaoFuncionariosViewModel f in Model.Funcionarios)
                 {
-                    <option value="@funcionario.Id">
-                        @funcionario.Nome
+                    <option value="@f.Id">
+                        @f.Nome
                     </option>
                 }
             </select>

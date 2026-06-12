@@ -28,7 +28,7 @@ public record ListarRequisicaoEntradaViewModel(
 public record CadastrarRequisicaoEntradaViewModel(
     [Required(ErrorMessage = "O campo \"Data\" é obrigatória.")]
     [DataType(DataType.Date)]
-    DateTime? Data,
+    DateTime Data,
 
     [Required(ErrorMessage = "O campo \"Medicamento\" é obrigatório.")]
     Guid MedicamentoId,

@@ -16,6 +16,26 @@
     </div>
 
     <div class="d-flex gap-2 mb-4">
+            <div class="col-auto">
+
+                <select name="fornecedorNome" class="form-select">
+                    <option value="">Todos Fornecedores</option>
+
+                    @foreach (dynamic f in ViewBag.Fornecedores)
+                    {
+                        <option value="@f.Nome"
+                                selected="@(Context.Request.Query["fornecedorNome"] == f.Nome)">
+                            @f.Nome
+                        </option>
+                    }
+
+                </select>
+
+        <div class="col-auto">
+              
+                <button type="submit" class="btn btn-primary rounded-pill px-4 mb-3">Filtrar</button>
+
+        </div>
 
         <a class="btn @(!ViewBag.ApenasEmFalta ? "btn-primary" : "btn-outline-primary") rounded-pill px-4 mb-3"
             asp-action="Listar">Todos</a>
@@ -24,6 +44,7 @@
             asp-action="Listar"
             asp-route-apenasEmFalta="true">Em falta</a>
 
+        </div>
     </div>
 
 @if (Model.Count == 0)

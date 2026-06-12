@@ -23,12 +23,12 @@ public class ServicoRequisicaoEntrada
     {
         Funcionario? funcionarioSelecionado = repositorioFuncionario.SelecionarPorId(dto.FuncionarioId);
 
-        if (funcionarioSelecionado == null)
+        if (funcionarioSelecionado is null)
             return Falha(nameof(dto.FuncionarioId), "Selecione um funcionário válido.");
 
         Medicamentos? medicamentoSelecionado = repositorioMedicamentos.SelecionarPorId(dto.MedicamentoId);
 
-        if (medicamentoSelecionado == null)
+        if (medicamentoSelecionado is null)
             return Falha(nameof(dto.MedicamentoId), "Selecione um medicamento válido.");
 
         RequisicaoEntrada NewRequisicaoEntrada = new RequisicaoEntrada(

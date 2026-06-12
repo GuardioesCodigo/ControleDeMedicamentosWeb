@@ -7,16 +7,48 @@
 <div class="container mt-5">
 
     <div class="d-flex justify-content-between align-items-center mb-4">
+
         <h2>Consulta de Requisições de Entrada</h2>
-        <a type="button" class="btn btn-outline-primary rounded-pill px-4 mb-3" asp-action="CadastrarEntrada">
-            <i class="bi bi-plus-lg me-2"></i>Nova Requisição</a>
+
+        <a type="button" class="btn btn-outline-primary rounded-pill px-4 mb-3"
+           asp-action="CadastrarEntrada">
+            <i class="bi bi-plus-lg me-2"></i>Nova Requisição
+        </a>
+
     </div>
 
-@if (Model.Count == 0)
-{
-    <div class="alert alert-warning 12px" role="alert">
-        Nenhuma Requisição de Entrada cadastrada!
-    </div>
-}
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-warning 12px" role="alert">
+            Nenhuma Requisição de Entrada cadastrada!
+        </div>
+    }
+    else
+    {
+        <table class="table table-hover align-middle">
+
+            <thead class="table-primary">
+                <tr class="table-active">
+                    <th>Id</th>
+                    <th>Data</th>
+                    <th>Funcionário</th>
+                    <th>Quantidade de Itens</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (ListarRequisicaoEntradaViewModel r in Model)
+                {
+                    <tr>
+                        <td>@r.Id</td>
+                        <td>@r.Data</td>
+                        <td>@r.FuncionarioNome</td>
+                        <td>@r.Quantidade</td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    }
 
 </div>
