@@ -43,6 +43,13 @@ public class ServicoRequisicaoEntrada
         if (resultadoValidacao.IsFailed)
             return resultadoValidacao;
 
+        medicamentoSelecionado.AdicionarQuantidade(dto.Quantidade);
+
+        repositorioMedicamentos.Editar(
+            medicamentoSelecionado.Id,
+            medicamentoSelecionado
+        );
+
         repositorioRequisicaoEntrada.Cadastrar(NewRequisicaoEntrada);
 
         return Result.Ok();
