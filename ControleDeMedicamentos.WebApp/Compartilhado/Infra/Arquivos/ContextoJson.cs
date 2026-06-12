@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 using ControleDeMedicamentos.WebApp.ModuloFornecedores.Dominio;
 using ControleDeMedicamentos.WebApp.ModuloFuncionario.Dominio;
 using ControleDeMedicamentos.WebApp.ModuloMedicamentos.Dominio;
+using ControleDeMedicamentos.WebApp.ModuloPacientes.Dominio;
 
 namespace ControleDeMedicamentos.WebApp.Compartilhado.Infra.Arquivos;
 
@@ -12,6 +13,7 @@ public sealed class ContextoJson
     public List<Fornecedores> fornecedores {get; set;} = new List<Fornecedores>();
     public List<Medicamentos> medicamentos {get; set;} = new List<Medicamentos>();
     public List<Funcionario> funcionarios{get; set;} = new List<Funcionario>();
+    public List<Paciente> paciente {get; set;} = new List<Paciente>();
     private readonly string caminhoArquivo;
 
     public ContextoJson()
@@ -31,7 +33,6 @@ public sealed class ContextoJson
         JsonSerializerOptions opcoesJson = new JsonSerializerOptions();
         opcoesJson.WriteIndented = true;
         opcoesJson.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-        opcoesJson.ReferenceHandler = ReferenceHandler.Preserve;
         opcoesJson.Converters.Add(new JsonStringEnumConverter());
 
         string jsonString = JsonSerializer.Serialize(this, opcoesJson);
@@ -48,7 +49,6 @@ public sealed class ContextoJson
 
         JsonSerializerOptions opcoesJson = new JsonSerializerOptions();
         opcoesJson.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-        opcoesJson.ReferenceHandler = ReferenceHandler.Preserve;
         opcoesJson.Converters.Add(new JsonStringEnumConverter());
 
         ContextoJson? contextoSalvo = JsonSerializer
@@ -57,10 +57,9 @@ public sealed class ContextoJson
         if (contextoSalvo == null)
             return;
 
-
-
         fornecedores = contextoSalvo.fornecedores;
         medicamentos = contextoSalvo.medicamentos;
         funcionarios = contextoSalvo.funcionarios;
+        paciente = contextoSalvo.paciente;
     }
 }

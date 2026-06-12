@@ -1,0 +1,57 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+
+@model ControleDeMedicamentos.WebApp.ModuloPacientes.Views.PacienteViewModel
+
+<div class="container d-flex justify-content-center align-items-center"
+     style="min-height: calc(100vh - 120px);">
+
+    <form class="card border-0 shadow-lg p-4 rounded-4 w-100"
+          style="max-width: 620px;"
+          asp-action="Cadastrar"
+          method="post">
+        
+        <h2>Cadastro de Paciente</h2>
+
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-4">
+            <label asp-for="Nome" class="form-label fw-semibold">Nome</label>
+            <input asp-for="Nome" type="text" class="form-control form-control-lg rounded-3 shadow-sm">
+            <span asp-validation-for="Nome" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="Telefone" class="form-label fw-semibold">Telefone</label>
+            <input asp-for="Telefone" type="text" class="form-control form-control-lg rounded-3 shadow-sm">
+            <span asp-validation-for="Telefone" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="CartaoSus" class="form-label fw-semibold">Cartão SUS</label>
+            <input asp-for="CartaoSus" type="text" class="form-control form-control-lg rounded-3 shadow-sm">
+            <span asp-validation-for="CartaoSus" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="CPF" class="form-label fw-semibold">CPF</label>
+            <input asp-for="CPF" type="text" class="form-control form-control-lg rounded-3 shadow-sm">
+            <span asp-validation-for="CPF" class="text-danger small"></span>
+        </div>
+
+        <div class="d-flex justify-content-end gap-3 mt-4">
+            
+            <a class="btn btn-outline-danger rounded-pill"
+               asp-action="Listar">
+                Voltar
+            </a>
+
+            <button type="submit" class="btn btn-outline-success rounded-pill">
+                Confirmar
+            </button>
+
+        </div>
+    </form>
+</div>
