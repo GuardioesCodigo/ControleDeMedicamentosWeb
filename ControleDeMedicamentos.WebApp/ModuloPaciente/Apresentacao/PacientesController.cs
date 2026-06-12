@@ -74,13 +74,43 @@ public class PacienteController : Controller
     [HttpPost("editar/{id:guid}")]
     public IActionResult Editar(Guid id, PacienteViewModel model)
     {
-        // ... lógica de atualização ...
-        _servico.Editar(_mapper.Map<Paciente>(model));
-        return RedirectToAction("Listar");
+        if (!ModelState.IsValid) return View(model);
+
+        try
+        {
+            // 1. Garante que o ID do model é o mesmo da URL
+            model.Id = id; 
+
+            // 2. Mapeia e salva
+            var paciente = _mapper.Map<Paciente>(model);
+            _servico.Editar(paciente);
+
+            // 3. Importante: Limpa o ModelState para evitar que dados antigos "sujem" a próxima visualização
+            ModelState.Clear();
+
+            return RedirectToAction("Listar");
+        }
+        catch (Exception ex)
+        {
+            ModelState.AddModelError("", ex.Message);
+            return View(model);
+        }
     }
 
-    [HttpGet("excluir/{id:guid}")]
+   [HttpGet("excluir/{id:guid}")]
     public IActionResult Excluir(Guid id)
+    {
+        var paciente = _servico.SelecionarPorId(id);
+        if (paciente == null) return NotFound();
+
+        // Mapeia para o ViewModel de Exclusão (que você já tem)
+        var model = _mapper.Map<ExcluirPacienteViewModel>(paciente);
+        
+        return View(model); // Aqui ele PARA e mostra a View para você!
+    }
+
+    [HttpPost("excluir/{id:guid}")]
+    public IActionResult Excluir(Guid id, ExcluirPacienteViewModel model)
     {
         _servico.Excluir(id);
         return RedirectToAction("Listar");

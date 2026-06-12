@@ -27,7 +27,6 @@ public sealed class ContextoJson
         JsonSerializerOptions opcoesJson = new JsonSerializerOptions();
         opcoesJson.WriteIndented = true;
         opcoesJson.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-        opcoesJson.ReferenceHandler = ReferenceHandler.Preserve;
         opcoesJson.Converters.Add(new JsonStringEnumConverter());
 
         string jsonString = JsonSerializer.Serialize(this, opcoesJson);
@@ -44,7 +43,6 @@ public sealed class ContextoJson
 
         JsonSerializerOptions opcoesJson = new JsonSerializerOptions();
         opcoesJson.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-        opcoesJson.ReferenceHandler = ReferenceHandler.Preserve;
         opcoesJson.Converters.Add(new JsonStringEnumConverter());
 
         ContextoJson? contextoSalvo = JsonSerializer

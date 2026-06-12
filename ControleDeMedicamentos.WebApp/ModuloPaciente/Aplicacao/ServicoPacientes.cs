@@ -18,11 +18,11 @@ public class ServicoPaciente
 
     public void Cadastrar(Paciente novoPaciente)
     {
+        if (novoPaciente.Id == Guid.Empty)
+        novoPaciente.Id = Guid.NewGuid();
+        
         if (_repositorio.SelecionarTodos().Any(x => x.CartaoSus == novoPaciente.CartaoSus))
             throw new Exception("Já existe um paciente com este cartão do SUS.");
-
-        if (_repositorio.SelecionarTodos().Any(x => x.CPF == novoPaciente.CPF))
-            throw new Exception("Já existe um paciente com este CPF.");
 
         _repositorio.Cadastrar(novoPaciente);
         _contexto.Salvar(); // O Serviço garante que a alteração seja persistida
