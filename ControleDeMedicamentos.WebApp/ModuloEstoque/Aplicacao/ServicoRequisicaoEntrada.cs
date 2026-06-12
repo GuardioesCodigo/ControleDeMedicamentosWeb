@@ -1,4 +1,5 @@
 using System;
+using ControleDeMedicamentos.WebApp.ModuloEstoque.Dominio;
 using ControleDeMedicamentos.WebApp.ModuloFuncionario.Dominio;
 using ControleDeMedicamentos.WebApp.ModuloMedicamentos.Dominio;
 using FluentResults;
@@ -7,13 +8,31 @@ namespace ControleDeMedicamentos.WebApp.ModuloEstoque.Aplicacao;
 
 public class ServicoRequisicaoEntrada
 {
+    private readonly IRepositorioRequisicaoEntrada repositorioRequisicaoEntrada;
     private readonly IRepositorioMedicamentos repositorioMedicamentos;
     private readonly IRepositorioFuncionario repositorioFuncionario;
 
-    public ServicoRequisicaoEntrada(IRepositorioMedicamentos repositorioMedicamentos, IRepositorioFuncionario repositorioFuncionario)
+    public ServicoRequisicaoEntrada(IRepositorioMedicamentos repositorioMedicamentos, IRepositorioFuncionario repositorioFuncionario, IRepositorioRequisicaoEntrada repositorioRequisicaoEntrada)
     {
         this.repositorioMedicamentos = repositorioMedicamentos;
         this.repositorioFuncionario = repositorioFuncionario;
+        this.repositorioRequisicaoEntrada = repositorioRequisicaoEntrada;
+    }
+
+    public List<ListarRequisicaoEntradaDto> SelecionarTodos()
+    {
+        return repositorioRequisicaoEntrada
+            .SelecionarTodos()
+            .Select(r => new ListarRequisicaoEntradaDto(
+                r.Id,
+                r.Data,
+                r.Medicamento.Id,
+                r.Medicamento.Nome,
+                r.Funcionario.Id,
+                r.Funcionario.Nome,
+                r.Quantidade
+            ))
+            .ToList();
     }
 
     public List<OpcaoMedicamentosDto> SelecionarMedicamentos()

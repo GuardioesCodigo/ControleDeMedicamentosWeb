@@ -1,3 +1,4 @@
+using ControleDeMedicamentos.WebApp.ModuloEstoque.Aplicacao;
 using ControleDeMedicamentos.WebApp.ModuloFornecedores.Aplicacao;
 using ControleDeMedicamentos.WebApp.ModuloMedicamentos.Aplicacao;
 
@@ -9,5 +10,6 @@ public static class InjecaoDependencia
     {
         services.AddScoped<ServicoFornecedores>();
         services.AddScoped<ServicoMedicamentos>();
+        services.AddScoped<ServicoRequisicaoEntrada>();
     }
 }
