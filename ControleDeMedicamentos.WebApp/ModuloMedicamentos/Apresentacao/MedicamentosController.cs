@@ -1,5 +1,6 @@
 using AutoMapper;
 using ControleDeMedicamentos.WebApp.Compartilhado.Apresentacao.Extensions;
+using ControleDeMedicamentos.WebApp.ModuloFornecedores.Aplicacao;
 using ControleDeMedicamentos.WebApp.ModuloMedicamentos.Aplicacao;
 using ControleDeMedicamentos.WebApp.ModuloMedicamentos.Dominio;
 using FluentResults;
@@ -7,14 +8,24 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ControleDeMedicamentos.WebApp.ModuloMedicamentos.Apresentacao;
 
-public class MedicamentosController(ServicoMedicamentos servicoMedicamentos, IMapper mapeador) : Controller
+public class MedicamentosController(ServicoMedicamentos servicoMedicamentos,ServicoFornecedores servicoFornecedores,  IMapper mapeador) : Controller
 {
     [HttpGet]
-    public ActionResult Listar(bool apenasEmFalta = false)
+    public ActionResult Listar(string fornecedorNome, bool apenasEmFalta = false)
     {
+        List<ListarMedicamentosDto> dtos = servicoMedicamentos.SelecionarTodos(apenasEmFalta);
+
         ViewBag.ApenasEmFalta = apenasEmFalta;
 
-        List<ListarMedicamentosDto> dtos = servicoMedicamentos.SelecionarTodos(apenasEmFalta);
+        if (!string.IsNullOrEmpty(fornecedorNome))
+        {
+            dtos = dtos
+                .Where(m => m.FornecedorNome == fornecedorNome)
+                .ToList();
+        }
+
+        ViewBag.Fornecedores = servicoFornecedores.SelecionarTodos();
+
         List<ListarMedicamentosViewModel> listarVms = mapeador.Map<List<ListarMedicamentosViewModel>>(dtos);
         
         return View(listarVms);
