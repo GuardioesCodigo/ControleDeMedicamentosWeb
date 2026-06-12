@@ -12,6 +12,14 @@ public class Medicamentos : EntidadeBase<Medicamentos>
     public Fornecedores Fornecedor { get; set; } = null!;
     public bool EstaEmFalta => Quantidade < 20;
 
+    public void AdicionarQuantidade(int quantidade)
+    {
+        if (quantidade <= 0)
+            throw new Exception("Quantidade inválida.");
+
+        Quantidade += quantidade;
+    }
+
     public Medicamentos() { }
 
     public Medicamentos(string nome, string descricao, int quantidade, Fornecedores fornecedor)

@@ -1,6 +1,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using ControleDeMedicamentos.WebApp.ModuloEstoque.Dominio;
 using ControleDeMedicamentos.WebApp.ModuloFornecedores.Dominio;
 using ControleDeMedicamentos.WebApp.ModuloFuncionario.Dominio;
 using ControleDeMedicamentos.WebApp.ModuloMedicamentos.Dominio;
@@ -14,6 +15,8 @@ public sealed class ContextoJson
     public List<Medicamentos> medicamentos {get; set;} = new List<Medicamentos>();
     public List<Funcionario> funcionarios{get; set;} = new List<Funcionario>();
     public List<Paciente> paciente {get; set;} = new List<Paciente>();
+    public List<RequisicaoEntrada> requisicaoEntradas {get; set;} = new List<RequisicaoEntrada>();
+
     private readonly string caminhoArquivo;
 
     public ContextoJson()
@@ -47,6 +50,9 @@ public sealed class ContextoJson
 
         string jsonString = File.ReadAllText(caminhoArquivo);
 
+        if (string.IsNullOrWhiteSpace(jsonString))
+            return;
+
         JsonSerializerOptions opcoesJson = new JsonSerializerOptions();
         opcoesJson.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         opcoesJson.Converters.Add(new JsonStringEnumConverter());
@@ -61,5 +67,6 @@ public sealed class ContextoJson
         medicamentos = contextoSalvo.medicamentos;
         funcionarios = contextoSalvo.funcionarios;
         paciente = contextoSalvo.paciente;
+        requisicaoEntradas = contextoSalvo.requisicaoEntradas;
     }
 }
