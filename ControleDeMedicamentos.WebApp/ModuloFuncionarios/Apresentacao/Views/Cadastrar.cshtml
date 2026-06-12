@@ -50,9 +50,11 @@
 
     <script>
         $(document).ready(function(){
+            // Aplica as máscaras
             $('#Telefone').mask('(00) 00000-0000');
-            $('#Cpf').mask('00000000000'); 
+            $('#Cpf').mask('000.000.000-00'); // Ajuste o formato se necessário
             
+            // Remove as máscaras antes de enviar para o servidor
             $('form').submit(function() {
                 $('#Telefone').unmask();
                 $('#Cpf').unmask();

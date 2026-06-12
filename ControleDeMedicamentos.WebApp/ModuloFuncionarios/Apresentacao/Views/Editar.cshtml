@@ -1,4 +1,4 @@
-﻿@model ControleDeMedicamentos.WebApp.ModuloFuncionarios.Apresentacao.FuncionarioViewModel
+﻿@model ControleDeMedicamentos.WebApp.ModuloFuncionarios.Apresentacao.EditarFuncionarioViewModel
 
 @{
     ViewData["Title"] = "Editar Funcionário";
@@ -12,6 +12,7 @@
         </div>
         <div class="card-body p-4">
             <form asp-action="Editar" method="post">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger p-2"></div>
                 
                 <input type="hidden" asp-for="Id" />
 
@@ -45,21 +46,21 @@
 </div>
 
 @section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
 
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-
     <script>
         $(document).ready(function(){
-            // Aplica a máscara no campo de Telefone
+            // Aplica as máscaras
             $('#Telefone').mask('(00) 00000-0000');
+            $('#Cpf').mask('000.000.000-00'); // Ajuste o formato se necessário
             
-            // Opcional: remove a máscara antes de enviar o form para o servidor
+            // Remove as máscaras antes de enviar para o servidor
             $('form').submit(function() {
                 $('#Telefone').unmask();
+                $('#Cpf').unmask();
             });
         });
     </script>

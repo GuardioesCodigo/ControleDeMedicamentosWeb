@@ -52,20 +52,25 @@ namespace ControleDeMedicamentos.WebApp.ModuloFuncionario.Apresentacao
             var funcionario = _servico.SelecionarPorId(id);
             if (funcionario == null) return NotFound();
 
-            var model = _mapper.Map<FuncionarioViewModel>(funcionario);
+            var model = _mapper.Map<EditarFuncionarioViewModel>(funcionario);
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult Editar(Guid id, FuncionarioViewModel model)
+        public IActionResult Editar(Guid id, EditarFuncionarioViewModel model)
         {
+            // 1. O tipo aqui deve ser o seu modelo de Edição
             if (!ModelState.IsValid) return View(model);
 
             try
             {
+                // 2. Garanta que o ID da URL seja passado para o modelo
                 model.Id = id;
-                var funcionario = _mapper.Map<Funcionario>(model);
-                _servico.Editar(funcionario);
+
+                // 3. O Controller não deve mapear para Funcionario aqui.
+                // O seu serviço já faz o trabalho de Mapear e Salvar!
+                _servico.Editar(model); 
+                
                 return RedirectToAction("Listar");
             }
             catch (Exception ex)

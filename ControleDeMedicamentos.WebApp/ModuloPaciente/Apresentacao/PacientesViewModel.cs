@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ControleDeMedicamentos.WebApp.ModuloPacientes.Views;
+namespace ControleDeMedicamentos.WebApp.ModuloPacientes.Apresentacao;
 
 // Usada para Cadastrar e Editar (contém todos os dados e validações)
 public class PacienteViewModel
@@ -41,4 +41,23 @@ public class ExcluirPacienteViewModel
     public string CPF { get; set; } = string.Empty;
     public string Telefone { get; set; } = string.Empty;
 
+}
+
+public class EditarPacienteViewModel
+{
+    public Guid Id { get; set; }
+
+    [Required(ErrorMessage = "O nome é obrigatório.")]
+    public string Nome { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "O telefone é obrigatório.")]
+    [RegularExpression(@"^\d{10,11}$", ErrorMessage = "Telefone inválido.")]
+    public string Telefone { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "O CPF é obrigatório.")]
+    [RegularExpression(@"^\d{11}$", ErrorMessage = "CPF inválido.")]
+    public string CPF { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "O Cartão SUS é obrigatório.")]
+    public string CartaoSus { get; set; } = string.Empty;
 }

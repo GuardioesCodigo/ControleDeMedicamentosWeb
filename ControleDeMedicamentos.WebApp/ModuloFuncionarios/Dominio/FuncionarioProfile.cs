@@ -12,6 +12,8 @@ public class FuncionarioProfile : Profile
         // use a FuncionarioViewModel para tudo
         CreateMap<Funcionario, FuncionarioViewModel>().ReverseMap();
         CreateMap<Funcionario, ExcluirFuncionarioViewModel>();
+        CreateMap<Funcionario, EditarFuncionarioViewModel>().ReverseMap();
+
         
         // Se você tiver uma classe separada para Listar, mantenha assim:
         // CreateMap<Funcionario, ListarFuncionarioViewModel>();

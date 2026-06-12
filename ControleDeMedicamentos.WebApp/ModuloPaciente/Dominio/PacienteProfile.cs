@@ -1,5 +1,5 @@
 using AutoMapper;
-using ControleDeMedicamentos.WebApp.ModuloPacientes.Views;
+using ControleDeMedicamentos.WebApp.ModuloPacientes.Apresentacao;
 
 namespace ControleDeMedicamentos.WebApp.ModuloPacientes.Dominio;
 
@@ -11,5 +11,6 @@ public class PacienteProfile : Profile
         CreateMap<Paciente, ListarPacienteViewModel>();
         CreateMap<Paciente, PacienteViewModel>().ReverseMap();
         CreateMap<Paciente, ExcluirPacienteViewModel>();
+        CreateMap<Paciente, EditarPacienteViewModel>().ReverseMap();
     }
 }

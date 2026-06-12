@@ -37,10 +37,25 @@ public class ServicoFuncionario
         _contexto.Salvar();
     }
 
-    public void Editar(Funcionario funcionarioAtualizado)
+    public void Editar(EditarFuncionarioViewModel model)
     {
-       
-        _repositorio.Editar(funcionarioAtualizado.Id, funcionarioAtualizado);
+        // 1. Mapeia a ViewModel para o domínio
+        var funcionarioEditado = _mapper.Map<Funcionario>(model);
+
+        // 2. Executa as validações do domínio
+        var erros = funcionarioEditado.Validar();
+        if (erros.Count > 0)
+            throw new Exception(string.Join(" | ", erros));
+
+        // 3. Validação de regra de negócio (CPF único, ignorando o próprio funcionário)
+        bool existeOutroComCpf = _repositorio.SelecionarTodos()
+            .Any(x => x.Cpf == funcionarioEditado.Cpf && x.Id != funcionarioEditado.Id);
+
+        if (existeOutroComCpf)
+            throw new Exception("Já existe outro funcionário cadastrado com este CPF.");
+
+        // 4. Persistência (não geramos Guid.NewGuid pois o ID já existe)
+        _repositorio.Editar(funcionarioEditado.Id, funcionarioEditado);
         _contexto.Salvar();
     }
 
