@@ -28,22 +28,24 @@ public class PacienteController : Controller
     [HttpPost("novo")]
     public IActionResult Cadastrar(PacienteViewModel model)
     {
+        // --- ADICIONE ESTA LIMPEZA AQUI ---
+        if (!string.IsNullOrEmpty(model.Telefone))
+            model.Telefone = new string(model.Telefone.Where(char.IsDigit).ToArray());
+
+        if (!string.IsNullOrEmpty(model.CPF))
+            model.CPF = new string(model.CPF.Where(char.IsDigit).ToArray());
+        // ----------------------------------
+
         if (!ModelState.IsValid) return View(model);
 
         try
         {
-            // Converte a ViewModel para o domínio (Paciente)
             var paciente = _mapper.Map<Paciente>(model);
-
-            // Chama o serviço para persistir
             _servico.Cadastrar(paciente);
-
-            //Redireciona após Salvar
             return RedirectToAction("Listar");
         }
         catch (Exception ex)
         {
-            // Se der erro (ex: CPF duplicado), mostra o erro na tela
             ModelState.AddModelError("", ex.Message);
             return View(model);
         }
@@ -72,27 +74,26 @@ public class PacienteController : Controller
         return View(model); 
     }
 
-    [HttpPost("editar/{id:guid}")]
-    public IActionResult Editar(Guid id, EditarPacienteViewModel model) // Receba o modelo de Edição
+   [HttpPost("editar/{id:guid}")]
+public IActionResult Editar(Guid id, EditarPacienteViewModel model)
+{
+    if (!ModelState.IsValid) return View(model);
+
+    try
     {
-        if (!ModelState.IsValid) return View(model);
+        model.Id = id; 
+        
+        // ENVIO DO MODELO DIRETO: O serviço se encarrega de mapear para Paciente
+        _servico.Editar(model); 
 
-        try
-        {
-            model.Id = id; 
-            var paciente = _mapper.Map<Paciente>(model);
-            // Aqui, como o seu serviço está esperando o ViewModel (conforme definimos antes),
-            // basta chamar o serviço. O serviço fará o .Map<Paciente>(model) internamente.
-            _servico.Editar(paciente); 
-
-            return RedirectToAction("Listar");
-        }
-        catch (Exception ex)
-        {
-            ModelState.AddModelError("", ex.Message);
-            return View(model);
-        }
+        return RedirectToAction("Listar");
     }
+    catch (Exception ex)
+    {
+        ModelState.AddModelError("", ex.Message);
+        return View(model);
+    }
+}
 
    [HttpGet("excluir/{id:guid}")]
     public IActionResult Excluir(Guid id)

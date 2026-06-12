@@ -50,8 +50,8 @@ public class EditarPacienteViewModel
     [Required(ErrorMessage = "O nome é obrigatório.")]
     public string Nome { get; set; } = string.Empty;
 
+    [Phone(ErrorMessage = "Formato de telefone inválido.")]
     [Required(ErrorMessage = "O telefone é obrigatório.")]
-    [RegularExpression(@"^\d{10,11}$", ErrorMessage = "Telefone inválido.")]
     public string Telefone { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "O CPF é obrigatório.")]

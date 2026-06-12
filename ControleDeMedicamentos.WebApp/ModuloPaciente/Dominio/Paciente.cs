@@ -1,58 +1,72 @@
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using ControleDeMedicamentos.WebApp.Compartilhado;
 using ControleDeMedicamentos.WebApp.Compartilhado.Dominio;
-using Microsoft.VisualBasic;
 
 namespace ControleDeMedicamentos.WebApp.ModuloPacientes.Dominio;
 
 public class Paciente : EntidadeBase<Paciente>
 {
-    public string Nome { get; set; } = string.Empty;
+    public string Nome { get; set; }
+    public string Telefone { get; set; }
+    public string CartaoSus { get; set; }
+    public string Cpf { get; set; } // Padronizado como 'Cpf' (minúsculas no restante)
 
-    public string Telefone { get; set; } = string.Empty;
+    // Construtor vazio (necessário para o AutoMapper)
+    public Paciente() { }
 
-    public string CartaoSus { get; set; } = string.Empty;
+    public Paciente(string nome, string telefone, string cartaoSus, string cpf)
+    {
+        Nome = nome;
+        Telefone = telefone;
+        CartaoSus = cartaoSus;
+        Cpf = cpf;
+    }
 
-    public string CPF { get; set; } = string.Empty;
     public override void Atualizar(Paciente entidadeAtualizada)
     {
-
         Nome = entidadeAtualizada.Nome;
         Telefone = entidadeAtualizada.Telefone;
         CartaoSus = entidadeAtualizada.CartaoSus;
-        CPF = entidadeAtualizada.CPF;
+        Cpf = entidadeAtualizada.Cpf;
     }
 
-        public override List<string> Validar()
+    public override List<string> Validar()
     {
         List<string> erros = new List<string>();
 
-        // Validação de Nome
         if (string.IsNullOrWhiteSpace(Nome))
-            erros.Add("O nome é obrigatório.");
+            erros.Add("O campo \"Nome\" deve ser preenchido.");
         else if (Nome.Length < 3 || Nome.Length > 100)
-            erros.Add("O nome deve ter entre 3 e 100 caracteres.");
+            erros.Add("O campo \"Nome\" deve conter entre 3 e 100 caracteres.");
 
-        // Validação de Telefone
         if (string.IsNullOrWhiteSpace(Telefone))
+        {
             erros.Add("O campo \"Telefone\" deve ser preenchido.");
+        }
         else if (!Regex.IsMatch(Telefone, @"^\d{11}$"))
-            erros.Add("O campo \"Telefone\" deve conter exatamente 11 dígitos numéricos.");
+        {
+            erros.Add("O campo \"Telefone\" deve conter exatamente 11 dígitos.");
+        }
 
-        // Validação de Cartão SUS (15 dígitos)
         if (string.IsNullOrWhiteSpace(CartaoSus))
+        {
             erros.Add("O campo \"Cartão SUS\" deve ser preenchido.");
+        }
         else if (!Regex.IsMatch(CartaoSus, @"^\d{15}$"))
-            erros.Add("O cartão SUS deve conter exatamente 15 dígitos numéricos.");
+        {
+            erros.Add("O campo \"Cartão SUS\" deve conter exatamente 15 dígitos.");
+        }
 
-        // Validação de CPF (11 dígitos)
-        if (string.IsNullOrWhiteSpace(CPF))
-            erros.Add("O campo \"CPF\" deve ser preenchido.");
-        else if (!Regex.IsMatch(CPF, @"^\d{11}$"))
-            erros.Add("O CPF deve conter exatamente 11 dígitos numéricos.");
+        if (string.IsNullOrWhiteSpace(Cpf))
+        {
+            erros.Add("O campo \"Cpf\" deve ser preenchido.");
+        }
+        else if (!Regex.IsMatch(Cpf, @"^\d{11}$"))
+        {
+            erros.Add("O campo \"Cpf\" deve conter exatamente 11 dígitos numéricos.");
+        }
 
         return erros;
     }
-
 }

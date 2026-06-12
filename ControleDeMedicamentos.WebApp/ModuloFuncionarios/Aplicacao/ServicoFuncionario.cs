@@ -59,6 +59,8 @@ public class ServicoFuncionario
         _contexto.Salvar();
     }
 
+    
+
     public void Excluir(Guid id)
     {
         _repositorio.Excluir(id);
