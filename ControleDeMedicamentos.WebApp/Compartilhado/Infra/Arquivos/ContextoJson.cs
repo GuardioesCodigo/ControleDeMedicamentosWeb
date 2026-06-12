@@ -50,6 +50,9 @@ public sealed class ContextoJson
 
         string jsonString = File.ReadAllText(caminhoArquivo);
 
+        if (string.IsNullOrWhiteSpace(jsonString))
+            return;
+
         JsonSerializerOptions opcoesJson = new JsonSerializerOptions();
         opcoesJson.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         opcoesJson.Converters.Add(new JsonStringEnumConverter());
