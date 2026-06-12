@@ -18,8 +18,6 @@
     <Folder Include="ModuloEstoque\Aplicacao\" />
     <Folder Include="ModuloEstoque\Apresentacao\" />
     <Folder Include="ModuloEstoque\Apresentacao\Views\" />
-    <Folder Include="ModuloEstoque\Dominio\" />
-    <Folder Include="ModuloEstoque\Infra\" />
     <Folder Include="ModuloFornecedores\Aplicacao\" />
     <Folder Include="ModuloFornecedores\Apresentacao\" />
     <Folder Include="ModuloFornecedores\Apresentacao\Views\" />

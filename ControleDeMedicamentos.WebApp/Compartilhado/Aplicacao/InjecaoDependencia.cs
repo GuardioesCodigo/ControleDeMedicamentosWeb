@@ -1,6 +1,6 @@
-using ControleDeMedicamentos.WebApp.ModuloEstoque.Aplicacao;
 using ControleDeMedicamentos.WebApp.ModuloFornecedores.Aplicacao;
 using ControleDeMedicamentos.WebApp.ModuloMedicamentos.Aplicacao;
+using ControleDeMedicamentos.WebApp.ModuloRequisicaoEntrada.Aplicacao;
 
 namespace ControleDeMedicamentos.WebApp.Compartilhado.Aplicacao;
 

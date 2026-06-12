@@ -1,0 +1,112 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@model CadastrarRequisicaoEntradaViewModel
+
+@if (Model.Funcionarios.Count == 0 || Model.Medicamentos.Count == 0)
+{
+    <div class="alert alert-warning 12px" role="alert">
+        Cadastre Funcionários e Medicamentos antes de registrar uma Requisição de Entrada.
+    </div>
+}
+
+<div class="container d-flex justify-content-center align-items-center"
+     style="min-height: calc(100vh - 120px);">
+
+    <form class="card border-0 shadow-lg p-4 rounded-4 w-100"
+          style="max-width: 620px;"
+          asp-action="Cadastrar"
+          method="post">
+
+        <h2>Cadastro de Requisição de Entrada</h2>
+
+        <div class="mb-3">
+            <label asp-for="Data"
+                   class="form-label fw-semibold text-primary text-uppercase small">
+                Data
+            </label>
+
+            <input asp-for="Data"
+                   type="date"
+                   class="form-control" />
+
+            <span asp-validation-for="Data"
+                  class="text-danger small fw-semibold"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="MedicamentoId"
+                   class="form-label fw-semibold text-primary text-uppercase small">
+                Medicamento
+            </label>
+
+            <select asp-for="MedicamentoId" class="form-select">
+                <option value="">Selecione um Medicamento</option>
+
+                @foreach (OpcaoMedicamentosViewModel medicamento in Model.Medicamentos)
+                {
+                    <option value="@medicamento.Id">
+                        @medicamento.Nome
+                    </option>
+                }
+            </select>
+
+            <span asp-validation-for="MedicamentoId"
+                  class="text-danger small fw-semibold"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="FuncionarioId"
+                   class="form-label fw-semibold text-primary text-uppercase small">
+                Funcionário
+            </label>
+
+            <select asp-for="FuncionarioId" class="form-select">
+                <option value="">Selecione um Funcionário</option>
+
+                @foreach (OpcaoFuncionariosViewModel funcionario in Model.Funcionarios)
+                {
+                    <option value="@funcionario.Id">
+                        @funcionario.Nome
+                    </option>
+                }
+            </select>
+
+            <span asp-validation-for="FuncionarioId"
+                  class="text-danger small fw-semibold"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Quantidade"
+                   class="form-label fw-semibold text-primary text-uppercase small">
+                Quantidade
+            </label>
+
+            <input asp-for="Quantidade"
+                   type="number"
+                   min="1"
+                   step="1"
+                   class="form-control" />
+
+            <span asp-validation-for="Quantidade"
+                  class="text-danger small fw-semibold"></span>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 mt-4">
+
+            <a class="btn btn-outline-danger rounded-pill"
+               asp-action="Listar">
+                Voltar
+            </a>
+
+            <button class="btn btn-outline-success rounded-pill"
+                    type="submit">
+                Confirmar
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
