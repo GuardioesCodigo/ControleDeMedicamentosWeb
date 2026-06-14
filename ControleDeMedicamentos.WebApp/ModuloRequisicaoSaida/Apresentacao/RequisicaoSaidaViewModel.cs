@@ -1,60 +1,45 @@
-// using System;
-// using System.Collections.Generic;
-// using System.ComponentModel.DataAnnotations;
-// using Microsoft.AspNetCore.Mvc.Rendering;
-
-// namespace ControleDeMedicamentos.WebApp.ModuloEstoque.RequisicoesSaida.Apresentacao;
-
-// public class CadastrarRequisicaoSaidaViewModel
-// {
-//     [Required(ErrorMessage = "O campo Data é obrigatório.")]
-//     public DateTime Data { get; set; } = DateTime.Today;
-
-//     [Required(ErrorMessage = "O campo Medicamento é obrigatório.")]
-//     public string MedicamentoId { get; set; } = string.Empty;
-
-//     [Required(ErrorMessage = "O campo Paciente é obrigatório.")]
-//     public string PacienteId { get; set; } = string.Empty;
-
-//     [Required(ErrorMessage = "O campo Quantidade é obrigatório.")]
-//     [Range(1, int.MaxValue, ErrorMessage = "O campo Quantidade deve ser um número positivo.")]
-//     public int Quantidade { get; set; }
-
-//     public List<SelectListItem> Medicamentos { get; set; } = new List<SelectListItem>();
-
-//     public List<SelectListItem> Pacientes { get; set; } = new List<SelectListItem>();
-// }
-
-// public class ListarRequisicaoSaidaViewModel
-// {
-//     public string Id { get; set; } = string.Empty;
-//     public DateTime Data { get; set; }
-//     public string MedicamentoNome { get; set; } = string.Empty;
-//     public string PacienteNome { get; set; } = string.Empty;
-//     public int Quantidade { get; set; }
-// }
 
 
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
-// public class EditarRequisicaoSaidaViewModel
-// {
-//     [Required]
-//     public string Id { get; set; } = string.Empty;
+namespace ControleDeMedicamentosWeb.WebApp.ModuloRequisicaoSaida.Apresentacao;
 
-//     [Required(ErrorMessage = "O campo Data é obrigatório.")]
-//     public DateTime Data { get; set; } = DateTime.Today;
+public class ListarRequisicaoSaidaViewModel
+{
+    public Guid Id { get; set; }
+    public DateTime Data { get; set; }
+    public string Paciente { get; set; } // Talvez o nome seja só "Paciente"?
+    public string Itens { get; set; }
+    public int QuantidadeTotal { get; set; }
+}
 
-//     [Required(ErrorMessage = "O campo Medicamento é obrigatório.")]
-//     public string MedicamentoId { get; set; } = string.Empty;
+public class CadastrarRequisicaoSaidaViewModel
+{
+    public DateTime Data { get; set; } = DateTime.Now;
+    public string PacienteId { get; set; }
+    
+    // Lista de Itens que o usuário selecionou na tela
+    public List<ItemRequisicaoViewModel> Itens { get; set; } = new();
 
-//     [Required(ErrorMessage = "O campo Paciente é obrigatório.")]
-//     public string PacienteId { get; set; } = string.Empty;
+    [ValidateNever]
+    public IEnumerable<SelectListItem> Pacientes { get; set; }
 
-//     [Required(ErrorMessage = "O campo Quantidade é obrigatório.")]
-//     [Range(1, int.MaxValue, ErrorMessage = "O campo Quantidade deve ser um número positivo.")]
-//     public int Quantidade { get; set; }
+    [ValidateNever]
+    public IEnumerable<SelectListItem> Medicamentos { get; set; }
+}
 
-//     public List<SelectListItem> Medicamentos { get; set; } = new List<SelectListItem>();
+public class ItemRequisicaoViewModel
+{
+    public string MedicamentoId { get; set; }
 
-//     public List<SelectListItem> Pacientes { get; set; } = new List<SelectListItem>();
-// }
+    [ValidateNever]
+    public string NomeMedicamento { get; set; }
+    public int Quantidade { get; set; }
+}
+public record OpcaoPacientesViewModel(
+    Guid Id,
+    string Nome,
+    string CartaoSus
+
+);

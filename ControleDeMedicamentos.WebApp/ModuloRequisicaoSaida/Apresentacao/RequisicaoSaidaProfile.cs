@@ -1,20 +1,23 @@
-// using AutoMapper;
-// using ControleDeMedicamentos.WebApp.ModuloEstoque.RequisicoesSaida.Aplicacao;
+using AutoMapper;
+using ControleDeMedicamentos.WebApp.ModuloRequisicaoSaidae.Aplicacao;
+using ControleDeMedicamentosWeb.WebApp.ModuloRequisicaoSaida.Apresentacao;
+using ControleDeMedicamentos.WebApp.ModuloEstoque.RequisicoesSaida.Dominio; // Ajuste para o namespace correto da sua Entidade/Dto
 
-// namespace ControleDeMedicamentos.WebApp.ModuloEstoque.RequisicoesSaida.Apresentacao;
+namespace ControleDeMedicamentos.WebApp.ModuloEstoque.RequisicoesSaida.Dominio;
 
-// public class RequisicaoSaidaProfile : Profile
-// {
-//     public RequisicaoSaidaProfile()
-//     {
-     
-//         CreateMap<CadastrarRequisicaoSaidaViewModel, CadastrarRequisicaoSaidaDto>();
+public class RequisicaoSaidaProfile : Profile
+{
+   public RequisicaoSaidaProfile()
+    {
+        // Cadastro (Mantido)
+        CreateMap<CadastrarRequisicaoSaidaViewModel, CadastrarRequisicaoSaidaDto>();
+        CreateMap<ItemRequisicaoViewModel, ItemRequisicaoDto>();
 
-
-//         CreateMap<ListarRequisicaoSaidaDto, ListarRequisicaoSaidaViewModel>();
-
-//         CreateMap<EditarRequisicaoSaidaDto, EditarRequisicaoSaidaViewModel>().ReverseMap();
-
-//         CreateMap<EditarRequisicaoSaidaDto, ListarRequisicaoSaidaViewModel>();
-//     }
-// }
+        // Listagem (Ajustado para o seu record)
+        CreateMap<ListarRequisicaoSaidaDto, ListarRequisicaoSaidaViewModel>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Paciente, opt => opt.MapFrom(src => src.PacienteNome))
+            .ForMember(dest => dest.Itens, opt => opt.MapFrom(src => src.ResumoMedicamentos))
+            .ForMember(dest => dest.QuantidadeTotal, opt => opt.MapFrom(src => src.QuantidadeTotal));
+    }
+}

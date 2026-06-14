@@ -1,0 +1,70 @@
+﻿@model List<ControleDeMedicamentosWeb.WebApp.ModuloRequisicaoSaida.Apresentacao.ListarRequisicaoSaidaViewModel>
+
+@{
+    Layout = "_Layout";
+}
+
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Consulta de Requisições de Saída</h2>
+        <a class="btn btn-outline-primary rounded-pill px-4" asp-action="Cadastrar">
+            <i class="bi bi-plus-lg me-2"></i>Nova Requisição
+        </a>
+    </div>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-warning" role="alert">
+            Nenhuma Requisição de Saída cadastrada!
+        </div>
+    }
+    else
+    {
+        <table class="table table-hover align-middle shadow-sm rounded">
+    <thead class="table-primary">
+        <tr>
+            <th>Id</th>
+            <th>Data</th>
+            <th>Paciente</th>
+            <th>Medicamentos</th>
+            <th>Qtd. Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.Id.ToString()</td>
+                <td>@r.Data.ToShortDateString()</td>
+                <td>@r.Paciente</td>
+                <td>
+                    <button class="btn btn-sm btn-outline-info" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#modal-@r.Id">
+                        Ver Medicamentos
+                    </button>
+                </td>
+                <td>@r.QuantidadeTotal</td>
+            </tr>
+
+            <div class="modal fade" id="modal-@r.Id" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Medicamentos - @r.Paciente</h5>
+                        </div>
+                        <div class="modal-body">
+                            <p>@r.Itens</p> </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </tbody>
+</table>
+    }
+</div>

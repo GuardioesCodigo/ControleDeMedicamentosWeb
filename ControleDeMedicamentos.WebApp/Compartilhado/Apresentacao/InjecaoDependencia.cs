@@ -4,24 +4,31 @@ namespace ControleDeMedicamentos.WebApp.Compartilhado.Apresentacao;
 
 public static class InjecaoDependencia
 {
-    public static void AddPresentationConfig(this IServiceCollection services)
+   public static void AddPresentationConfig(this IServiceCollection services)
+{
+    services.AddControllersWithViews().AddRazorOptions(options =>
     {
+        // Limpa os padrões para garantir que os nossos funcionem
+        options.ViewLocationFormats.Clear();
 
-        services.AddControllersWithViews().AddRazorOptions(options =>
-        {
-            options.ViewLocationFormats.Clear();
-            // Localização das Views dos módulos: /ModuloFabricante/Apresentacao/Views/Listar.cshtml
-            options.ViewLocationFormats.Add("/Modulo{1}/Apresentacao/Views/{0}.cshtml");
-            // Localização das Views compartilhadas: /Compartilhado/Apresentacao/Views/_Layout.cshtml
-            options.ViewLocationFormats.Add("/Compartilhado/Apresentacao/Views/{0}.cshtml");
-            options.ViewLocationFormats.Add("/ModuloPacientes/Apresentacao/Views/{0}.cshtml");
-        });
+        // Procura na estrutura de módulos
+        options.ViewLocationFormats.Add("/Modulo{1}/Apresentacao/Views/{0}.cshtml");
+        
+        // Procura se a pasta não tiver o prefixo "Modulo"
+        options.ViewLocationFormats.Add("/{1}/Apresentacao/Views/{0}.cshtml");
 
+        // Procura na raiz (padrão)
+        options.ViewLocationFormats.Add("/Views/{1}/{0}.cshtml");
+        options.ViewLocationFormats.Add("/Views/Shared/{0}.cshtml");
 
-        services.AddAutoMapper(config => 
-        {
-            config.AddMaps(typeof(Program).Assembly);
-        });
-    }
+        // Compartilhados
+        options.ViewLocationFormats.Add("/Compartilhado/Apresentacao/Views/{0}.cshtml");
+    });
+
+    services.AddAutoMapper(config => 
+    {
+        config.AddMaps(typeof(Program).Assembly);
+    });
+}
 }
 
