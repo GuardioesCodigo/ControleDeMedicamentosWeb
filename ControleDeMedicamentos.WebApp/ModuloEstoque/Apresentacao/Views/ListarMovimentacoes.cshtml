@@ -28,42 +28,43 @@ else
 {
     <table class="table table-hover align-middle">
 
-        <thead class="table-primary">
-            <tr class="table-active">
-                <th>Data</th>
-                <th>Medicamento</th>
-                <th>Tipo</th>
-                <th>Quantidade</th>
+    <thead class="table-primary">
+        <tr class="table-active">
+            <th>Data</th>
+            <th>Descrição</th>
+            <th>Tipo</th>
+            <th>Quantidade</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (ListarMovimentacoesViewModel movimentacao in Model)
+        {
+            <tr>
+                <td>@movimentacao.Data.ToString("dd/MM/yyyy")</td>
+
+                <td>@movimentacao.Descricao</td>
+
+                <td>
+                    @if (movimentacao.Tipo == "Entrada")
+                    {
+                        <span class="badge bg-success">
+                            @movimentacao.Tipo
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">
+                            @movimentacao.Tipo
+                        </span>
+                    }
+                </td>
+
+                <td>@movimentacao.Quantidade</td>
             </tr>
-        </thead>
+        }
+    </tbody>
 
-        <tbody>
-            @foreach (ListarMovimentacoesViewModel movimentacao in Model)
-            {
-                <tr>
-                    <td>@movimentacao.Data.ToString(format: "dd/MM/yyyy HH:mm")</td>
-
-                    <td>@movimentacao.Medicamento</td>
-
-                    <td>
-                        @if (movimentacao.Tipo == "Entrada")
-                        {
-                            <span class="badge bg-success">
-                                @movimentacao.Tipo
-                            </span>
-                        }
-                        else
-                        {
-                            <span class="badge bg-danger">
-                                @movimentacao.Tipo
-                            </span>
-                        }
-                    </td>
-
-                    <td>@movimentacao.Quantidade</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+</table>
 }
 </div>

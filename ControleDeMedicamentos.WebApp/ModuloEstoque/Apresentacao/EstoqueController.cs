@@ -1,4 +1,5 @@
 using ControleDeMedicamentos.WebApp.ModuloRequisicaoEntrada.Aplicacao;
+using ControleDeMedicamentos.WebApp.ModuloRequisicaoSaida.Aplicacao;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleDeMedicamentos.WebApp.ModuloEstoque.Apresentacao;
@@ -7,12 +8,14 @@ namespace ControleDeMedicamentos.WebApp.ModuloEstoque.Apresentacao;
 public class EstoqueController : Controller
 {
     private readonly ServicoRequisicaoEntrada servicoRequisicaoEntrada;
+    private readonly ServicoRequisicaoSaida servicoRequisicaoSaida;
 
-    public EstoqueController(ServicoRequisicaoEntrada servicoEntrada)
+    public EstoqueController(ServicoRequisicaoEntrada servicoEntrada, ServicoRequisicaoSaida servicoRequisicaoSaida)
     {
         servicoRequisicaoEntrada = servicoEntrada;
+        this.servicoRequisicaoSaida = servicoRequisicaoSaida;
     }
-    
+
     [HttpGet]
     public ActionResult Listar()
     {
@@ -31,9 +34,23 @@ public class EstoqueController : Controller
             movimentacoes.Add(
                 new ListarMovimentacoesViewModel(
                     e.Data,
-                    e.MedicamentoNome,
                     "Entrada",
+                    e.MedicamentoNome,
                     e.Quantidade
+                )
+            );
+        }
+
+        var saidas = servicoRequisicaoSaida.SelecionarTodos();
+
+        foreach (var s in saidas)
+        {
+            movimentacoes.Add(
+                new ListarMovimentacoesViewModel(
+                    s.Data,
+                    "Saída",
+                    $"{s.PacienteNome} - {s.ResumoMedicamentos}",
+                    s.QuantidadeTotal
                 )
             );
         }
