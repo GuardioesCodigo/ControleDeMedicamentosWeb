@@ -12,6 +12,7 @@
     <Folder Include="Compartilhado\Apresentacao\Views\" />
     <Folder Include="Compartilhado\Infra\" />
     <Folder Include="Compartilhado\Infra\Arquivos\" />
+    <Folder Include="Compartilhado\Infra\Sql\" />
     <Folder Include="ModuloCentroControle\Apresentacao\" />
     <Folder Include="ModuloCentroControle\Apresentacao\Views\" />
     <Folder Include="ModuloEstoque\" />
@@ -34,7 +35,9 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="16.1.1" />
+    <PackageReference Include="Dapper" Version="2.1.79" />
     <PackageReference Include="FluentResults" Version="4.0.0" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.1" />
   </ItemGroup>
 
 </Project>

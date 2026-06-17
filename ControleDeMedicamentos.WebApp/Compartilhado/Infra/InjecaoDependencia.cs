@@ -13,6 +13,7 @@ using ControleDeMedicamentos.WebApp.ModuloPacientes.Infra;
 using ControleDeMedicamentos.WebApp.ModuloRequisicaoSaida.Aplicacao;
 using ControleDeMedicamentos.WebApp.ModuloRequisicaoSaida.Dominio;
 using ControleDeMedicamentos.WebApp.ModuloRequisicaoSaida.Infra;
+using ControleDeMedicamentosWeb.WebApp.Compartilhado.Infra.Sql;
 
 namespace ControleDeMedicamentos.WebApp.Compartilhado.Infra;
 
@@ -28,6 +29,8 @@ public static class InjecaoDependencia
 
             return contextoJson;
         });
+
+        services.AddScoped<ISqlConnectionFactory, SqlConnectionFactory>();
 
         services.AddScoped<IRepositorioFornecedores, RepositorioFornecedoresEmArquivo>();
         services.AddScoped<IRepositorioMedicamentos, RepositorioMedicamentosEmArquivo>();
