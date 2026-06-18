@@ -6,10 +6,10 @@ namespace ControleDeMedicamentos.WebApp.ModuloMedicamentos.Aplicacao;
 
 public class ServicoMedicamentos
 {
-    private readonly IRepositorioMedicamentos repositorioMedicamentos;
-    private readonly IRepositorioFornecedores repositorioFornecedores;
+    private readonly IRepositorioMedicamento repositorioMedicamentos;
+    private readonly IRepositorioFornecedor repositorioFornecedores;
 
-    public ServicoMedicamentos(IRepositorioMedicamentos repositorioMedicamentos, IRepositorioFornecedores repositorioFornecedores)
+    public ServicoMedicamentos(IRepositorioMedicamento repositorioMedicamentos, IRepositorioFornecedor repositorioFornecedores)
     {
         this.repositorioMedicamentos = repositorioMedicamentos;
         this.repositorioFornecedores = repositorioFornecedores;
@@ -40,7 +40,7 @@ public class ServicoMedicamentos
 
     public Result Cadastrar(CadastrarMedicamentosDto dto)
     {
-        Fornecedores? fornecedoresSelecionado = repositorioFornecedores.SelecionarPorId(dto.FornecedorId);
+        Fornecedor? fornecedoresSelecionado = repositorioFornecedores.SelecionarPorId(dto.FornecedorId);
 
         bool existeDuplicado = repositorioMedicamentos
             .SelecionarTodos()
@@ -52,7 +52,7 @@ public class ServicoMedicamentos
         if (existeDuplicado)
         return Result.Fail("Já existe um medicamento com este nome deste Fornecedor.");    
 
-        Medicamentos? existente = repositorioMedicamentos
+        Medicamento? existente = repositorioMedicamentos
             .SelecionarTodos()
             .FirstOrDefault(m =>
                 m.Nome == dto.Nome &&
@@ -74,7 +74,7 @@ public class ServicoMedicamentos
         if (ExisteMedicamentoComMesmoFornecedor(dto.Nome, dto.FornecedorId))
             return Falha(nameof(dto.Nome), "Já existe um medicamento com este nome deste Fornecedor.");
 
-        Medicamentos novoMedicamentos = new Medicamentos(
+        Medicamento novoMedicamentos = new Medicamento(
             dto.Nome,
             dto.Descricao,
             dto.Quantidade,
@@ -93,7 +93,7 @@ public class ServicoMedicamentos
 
     public Result Editar(EditarMedicamentosDto dto)
     {
-        Medicamentos? medicamentos = repositorioMedicamentos.SelecionarPorId(dto.Id);
+        Medicamento? medicamentos = repositorioMedicamentos.SelecionarPorId(dto.Id);
 
         if (medicamentos == null)
             return Result.Fail("Medicamento não encontrado");
@@ -109,7 +109,7 @@ public class ServicoMedicamentos
         if (existeDuplicado)
             return Result.Fail("Já existe um medicamento com este nome deste Fornecedor.");
 
-        Fornecedores? fornecedorSelecionado =
+        Fornecedor? fornecedorSelecionado =
             repositorioFornecedores.SelecionarPorId(dto.FornecedorId);
 
         if (fornecedorSelecionado == null)
@@ -132,7 +132,7 @@ public class ServicoMedicamentos
 
     public Result Excluir(Guid Id)
     {
-        Medicamentos? medicamentos = repositorioMedicamentos.SelecionarPorId(Id);
+        Medicamento? medicamentos = repositorioMedicamentos.SelecionarPorId(Id);
 
         if (medicamentos == null)
             return Result.Fail("Medicamento não encontrado");  
@@ -144,7 +144,7 @@ public class ServicoMedicamentos
 
     public List<ListarMedicamentosDto> SelecionarTodos()
     {
-        List<Medicamentos> medicamentos = repositorioMedicamentos.SelecionarTodos();
+        List<Medicamento> medicamentos = repositorioMedicamentos.SelecionarTodos();
 
         return medicamentos
             .Select(m => new ListarMedicamentosDto(m.Id, m.Nome, m.Descricao, m.Quantidade, m.Fornecedor.Id, m.Fornecedor.Nome))
@@ -153,7 +153,7 @@ public class ServicoMedicamentos
 
     public Result<DetalhesMedicamentosDto> SelecionarPorId(Guid id)
     {
-        Medicamentos? medicamentos = repositorioMedicamentos.SelecionarPorId(id);
+        Medicamento? medicamentos = repositorioMedicamentos.SelecionarPorId(id);
 
         if (medicamentos == null)
             return Result.Fail("Fornecedor não encontrado");
@@ -188,7 +188,7 @@ public class ServicoMedicamentos
             );
     }
 
-    private static Result ValidarEntidade(Medicamentos medicamentos)
+    private static Result ValidarEntidade(Medicamento medicamentos)
     {
         List<string> erros = medicamentos.Validar();
 

@@ -2,16 +2,16 @@ using ControleDeMedicamentos.WebApp.Compartilhado.Dominio;
 
 namespace ControleDeMedicamentos.WebApp.ModuloFornecedores.Dominio;
 
-public class Fornecedores : EntidadeBase<Fornecedores>
+public class Fornecedor : EntidadeBase<Fornecedor>
 {
 
     public string Nome { get; set; } = string.Empty;
     public string Telefone { get; set; } = string.Empty;
     public string Cnpj { get; set; } = string.Empty;
 
-    public Fornecedores() { }
+    public Fornecedor() { }
 
-    public Fornecedores(
+    public Fornecedor(
         string nome, 
         string telefone, 
         string cnpj
@@ -79,9 +79,9 @@ public class Fornecedores : EntidadeBase<Fornecedores>
         return erros;
     }
 
-    public override void Atualizar(Fornecedores entidadeAtualizada)
+    public override void Atualizar(Fornecedor entidadeAtualizada)
     {
-        Fornecedores fornecedorAtualizado = (Fornecedores)entidadeAtualizada;
+        Fornecedor fornecedorAtualizado = (Fornecedor)entidadeAtualizada;
 
         Nome = fornecedorAtualizado.Nome;
         Telefone = fornecedorAtualizado.Telefone;

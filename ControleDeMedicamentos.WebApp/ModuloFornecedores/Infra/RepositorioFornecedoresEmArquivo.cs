@@ -5,13 +5,13 @@ using ControleDeMedicamentos.WebApp.ModuloFornecedores.Dominio;
 
 namespace ControleDeMedicamentos.WebApp.ModuloFornecedores.Infra;
 
-public class RepositorioFornecedoresEmArquivo : RepositorioBaseEmArquivo<Fornecedores>, IRepositorioFornecedores
+public class RepositorioFornecedoresEmArquivo : RepositorioBaseEmArquivo<Fornecedor>, IRepositorioFornecedor
 {
     public RepositorioFornecedoresEmArquivo(ContextoJson contexto) : base(contexto)
     {
     }
 
-    protected override List<Fornecedores> CarregarRegistros()
+    protected override List<Fornecedor> CarregarRegistros()
     {
         return contexto.fornecedores;
     }

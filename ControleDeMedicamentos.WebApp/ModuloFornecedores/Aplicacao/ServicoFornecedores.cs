@@ -8,10 +8,10 @@ namespace ControleDeMedicamentos.WebApp.ModuloFornecedores.Aplicacao;
 
 public class ServicoFornecedores
 {
-    private readonly IRepositorioFornecedores repositorioFornecedores;
-    private readonly IRepositorioMedicamentos repositorioMedicamentos;
+    private readonly IRepositorioFornecedor repositorioFornecedores;
+    private readonly IRepositorioMedicamento repositorioMedicamentos;
 
-    public ServicoFornecedores(IRepositorioFornecedores repositorioFornecedores, IRepositorioMedicamentos repositorioMedicamentos)
+    public ServicoFornecedores(IRepositorioFornecedor repositorioFornecedores, IRepositorioMedicamento repositorioMedicamentos)
     {
         this.repositorioFornecedores = repositorioFornecedores;
         this.repositorioMedicamentos = repositorioMedicamentos;
@@ -22,7 +22,7 @@ public class ServicoFornecedores
         if (ExisteFornecedorComCnjp(dtos.CNPJ))
             return Falha("Cnpj", "Já existe um Fornecedor com este CNPJ.");
 
-        Fornecedores novoFornecedor = new Fornecedores(
+        Fornecedor novoFornecedor = new Fornecedor(
             dtos.Nome,
             dtos.Telefone,
             dtos.CNPJ
@@ -38,7 +38,7 @@ public class ServicoFornecedores
         if (ExisteFornecedorComCnjp(dto.CNPJ, dto.Id))
             return Falha(nameof(dto.CNPJ), "Já existe um Fornecedor com este CNPJ");
 
-        Fornecedores fornecedorAtualizado = new Fornecedores(dto.Nome, dto.Telefone, dto.CNPJ);
+        Fornecedor fornecedorAtualizado = new Fornecedor(dto.Nome, dto.Telefone, dto.CNPJ);
 
         Result resultadoValidacao = ValidarEntidade(fornecedorAtualizado);
 
@@ -55,7 +55,7 @@ public class ServicoFornecedores
 
     public Result Excluir(Guid id)
     {
-        Fornecedores? fornecedores = repositorioFornecedores.SelecionarPorId(id);
+        Fornecedor? fornecedores = repositorioFornecedores.SelecionarPorId(id);
 
         if (fornecedores == null)
             return Result.Fail("Fornecedor não encontrado.");
@@ -76,9 +76,9 @@ public class ServicoFornecedores
 
     private bool ExisteFornecedorComCnjp(string cnpj, Guid? idIgnorado = null)
     {
-        List<Fornecedores> fornecedores = repositorioFornecedores.SelecionarTodos();
+        List<Fornecedor> fornecedores = repositorioFornecedores.SelecionarTodos();
 
-        foreach(Fornecedores f in fornecedores)
+        foreach(Fornecedor f in fornecedores)
         {
             if (f.Id != idIgnorado && string.Equals(f.Cnpj, cnpj, StringComparison.OrdinalIgnoreCase))
             {
@@ -91,7 +91,7 @@ public class ServicoFornecedores
 
     public List<ListarFornecedoresDto> SelecionarTodos()
     {
-        List<Fornecedores> fornecedores = repositorioFornecedores.SelecionarTodos();
+        List<Fornecedor> fornecedores = repositorioFornecedores.SelecionarTodos();
 
         return fornecedores
             .Select(f => new ListarFornecedoresDto(f.Id, f.Nome, f.Telefone, f.Cnpj))
@@ -100,7 +100,7 @@ public class ServicoFornecedores
 
     public Result<DetalhesFornecedoresDto> SelecionarPorId(Guid id)
     {
-        Fornecedores? fornecedores = repositorioFornecedores.SelecionarPorId(id);
+        Fornecedor? fornecedores = repositorioFornecedores.SelecionarPorId(id);
 
         if (fornecedores == null)
             return Result.Fail("Fornecedor não encontrado");
@@ -110,7 +110,7 @@ public class ServicoFornecedores
         );
     }
 
-    private static Result ValidarEntidade(Fornecedores fornecedores)
+    private static Result ValidarEntidade(Fornecedor fornecedores)
     {
         List<string> erros = fornecedores.Validar();
 

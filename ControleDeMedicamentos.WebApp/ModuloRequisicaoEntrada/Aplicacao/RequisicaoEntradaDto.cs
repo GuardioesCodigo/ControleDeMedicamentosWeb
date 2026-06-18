@@ -5,7 +5,7 @@ namespace ControleDeMedicamentos.WebApp.ModuloRequisicaoEntrada.Aplicacao;
 public record OpcaoMedicamentosDto(
     Guid Id,
     string Nome,
-    Fornecedores Fornecedor
+    Fornecedor Fornecedor
 );
 
 public record OpcaoFuncionariosDto(

@@ -5,13 +5,13 @@ using ControleDeMedicamentos.WebApp.ModuloMedicamentos.Dominio;
 
 namespace ControleDeMedicamentos.WebApp.ModuloMedicamentos.Infra;
 
-public class RepositorioMedicamentosEmArquivo : RepositorioBaseEmArquivo<Medicamentos>, IRepositorioMedicamentos
+public class RepositorioMedicamentosEmArquivo : RepositorioBaseEmArquivo<Medicamento>, IRepositorioMedicamento
 {
     public RepositorioMedicamentosEmArquivo(ContextoJson contexto) : base(contexto)
     {
     }
 
-    protected override List<Medicamentos> CarregarRegistros()
+    protected override List<Medicamento> CarregarRegistros()
     {
         return contexto.medicamentos;
     }

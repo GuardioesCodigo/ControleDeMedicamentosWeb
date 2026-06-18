@@ -7,7 +7,7 @@ namespace ControleDeMedicamentos.WebApp.ModuloEstoque.Dominio;
 
 public class RequisicaoEntrada : EntidadeBase<RequisicaoEntrada>
 {
-    public Medicamentos Medicamento { get; set; } = null!;
+    public Medicamento Medicamento { get; set; } = null!;
     public Funcionario Funcionario { get; set; } = null!;
     public int Quantidade { get; set; }
     public DateTime Data { get; set; }
@@ -17,7 +17,7 @@ public class RequisicaoEntrada : EntidadeBase<RequisicaoEntrada>
     }
 
 
-    public RequisicaoEntrada(Medicamentos medicamento, Funcionario funcionario, int quantidade, DateTime data)
+    public RequisicaoEntrada(Medicamento medicamento, Funcionario funcionario, int quantidade, DateTime data)
     {
         Medicamento = medicamento;
         Funcionario = funcionario;

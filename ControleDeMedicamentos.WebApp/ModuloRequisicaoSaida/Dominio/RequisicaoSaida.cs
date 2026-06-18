@@ -9,7 +9,7 @@ public class RequisicaoSaida : EntidadeBase<RequisicaoSaida>
     public Guid PacienteId { get; set; }
     public Guid MedicamentoId { get; set; }
     public Paciente Paciente { get; set; }
-    public Medicamentos Medicamentos { get; set; }
+    public Medicamento Medicamentos { get; set; }
     public List<ItemRequisicaoSaida> Itens { get; set; } = new();
 
     public override List<string> Validar()
@@ -32,6 +32,6 @@ public class RequisicaoSaida : EntidadeBase<RequisicaoSaida>
 public class ItemRequisicaoSaida
 {
     public Guid MedicamentoId { get; set; }
-    public Medicamentos Medicamento { get; set; }
+    public Medicamento Medicamento { get; set; }
     public int Quantidade { get; set; }
 }

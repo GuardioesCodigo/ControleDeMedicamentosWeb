@@ -4,12 +4,12 @@ using ControleDeMedicamentos.WebApp.ModuloFornecedores.Dominio;
 
 namespace ControleDeMedicamentos.WebApp.ModuloMedicamentos.Dominio;
 
-public class Medicamentos : EntidadeBase<Medicamentos>
+public class Medicamento : EntidadeBase<Medicamento>
 {
     public string Nome { get; set; } = string.Empty;
     public string Descricao { get; set; } = string.Empty;
     public int Quantidade { get; set; }
-    public Fornecedores Fornecedor { get; set; } = null!;
+    public Fornecedor Fornecedor { get; set; } = null!;
     public bool EstaEmFalta => Quantidade < 20;
 
     public void AdicionarQuantidade(int quantidade)
@@ -20,9 +20,9 @@ public class Medicamentos : EntidadeBase<Medicamentos>
         Quantidade += quantidade;
     }
 
-    public Medicamentos() { }
+    public Medicamento() { }
 
-    public Medicamentos(string nome, string descricao, int quantidade, Fornecedores fornecedor)
+    public Medicamento(string nome, string descricao, int quantidade, Fornecedor fornecedor)
     {
         Nome = nome;
         Descricao = descricao;
@@ -51,7 +51,7 @@ public class Medicamentos : EntidadeBase<Medicamentos>
         return erros;
     }
     
-    public override void Atualizar(Medicamentos entidadeAtualizada)
+    public override void Atualizar(Medicamento entidadeAtualizada)
     {
         this.Nome = entidadeAtualizada.Nome;
         this.Descricao = entidadeAtualizada.Descricao;

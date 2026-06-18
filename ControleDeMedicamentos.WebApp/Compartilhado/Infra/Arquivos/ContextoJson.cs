@@ -12,8 +12,8 @@ namespace ControleDeMedicamentos.WebApp.Compartilhado.Infra.Arquivos;
 
 public sealed class ContextoJson
 {
-    public List<Fornecedores> fornecedores {get; set;} = new List<Fornecedores>();
-    public List<Medicamentos> medicamentos {get; set;} = new List<Medicamentos>();
+    public List<Fornecedor> fornecedores {get; set;} = new List<Fornecedor>();
+    public List<Medicamento> medicamentos {get; set;} = new List<Medicamento>();
     public List<Funcionario> funcionarios{get; set;} = new List<Funcionario>();
     public List<Paciente> paciente {get; set;} = new List<Paciente>();
     public List<RequisicaoEntrada> requisicaoEntradas {get; set;} = new List<RequisicaoEntrada>();

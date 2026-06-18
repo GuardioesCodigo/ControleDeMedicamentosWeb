@@ -7,7 +7,7 @@ namespace ControleDeMedicamentos.WebApp.ModuloRequisicaoEntrada.Apresentacao;
 public record OpcaoMedicamentosViewModel(
     Guid Id,
     string Nome,
-    Fornecedores Fornecedor
+    Fornecedor Fornecedor
 );
 
 public record OpcaoFuncionariosViewModel(

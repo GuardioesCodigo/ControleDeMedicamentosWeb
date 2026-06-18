@@ -14,13 +14,13 @@ namespace ControleDeMedicamentos.WebApp.ModuloRequisicaoSaida.Aplicacao;
 public class ServicoRequisicaoSaida
 {
     private readonly IRepositorioRequisicaoSaida _repositorioRequisicao;
-    private readonly IRepositorioMedicamentos _repositorioMedicamento;
+    private readonly IRepositorioMedicamento _repositorioMedicamento;
     private readonly IRepositorio<Paciente> _repositorioPaciente;
     private readonly ContextoJson _contexto;
 
     public ServicoRequisicaoSaida(
         IRepositorioRequisicaoSaida repositorioRequisicao,
-        IRepositorioMedicamentos repositorioMedicamento,
+        IRepositorioMedicamento repositorioMedicamento,
         IRepositorio<Paciente> repositorioPaciente,
         ContextoJson contexto
     )

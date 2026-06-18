@@ -9,10 +9,10 @@ namespace ControleDeMedicamentos.WebApp.ModuloRequisicaoEntrada.Aplicacao;
 public class ServicoRequisicaoEntrada
 {
     private readonly IRepositorioRequisicaoEntrada repositorioRequisicaoEntrada;
-    private readonly IRepositorioMedicamentos repositorioMedicamentos;
+    private readonly IRepositorioMedicamento repositorioMedicamentos;
     private readonly IRepositorioFuncionario repositorioFuncionario;
 
-    public ServicoRequisicaoEntrada(IRepositorioMedicamentos repositorioMedicamentos, IRepositorioFuncionario repositorioFuncionario, IRepositorioRequisicaoEntrada repositorioRequisicaoEntrada)
+    public ServicoRequisicaoEntrada(IRepositorioMedicamento repositorioMedicamentos, IRepositorioFuncionario repositorioFuncionario, IRepositorioRequisicaoEntrada repositorioRequisicaoEntrada)
     {
         this.repositorioMedicamentos = repositorioMedicamentos;
         this.repositorioFuncionario = repositorioFuncionario;
@@ -26,7 +26,7 @@ public class ServicoRequisicaoEntrada
         if (funcionarioSelecionado is null)
             return Falha(nameof(dto.FuncionarioId), "Selecione um funcionário válido.");
 
-        Medicamentos? medicamentoSelecionado = repositorioMedicamentos.SelecionarPorId(dto.MedicamentoId);
+        Medicamento? medicamentoSelecionado = repositorioMedicamentos.SelecionarPorId(dto.MedicamentoId);
 
         if (medicamentoSelecionado is null)
             return Falha(nameof(dto.MedicamentoId), "Selecione um medicamento válido.");
